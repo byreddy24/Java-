@@ -16,7 +16,7 @@ public class CategoryController {
     }
     @PostMapping
     public Category createCategory(@RequestBody Category category){
-        return categocd ryService.saveCategory(category);
+        return categoryService.saveCategory(category);
 
     }
     @GetMapping("/{id}")
