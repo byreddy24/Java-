@@ -1,0 +1,1081 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>LMS – Cart</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --primary: #ffe066;
+      --highlight: #8267e5;
+      --bg-dark: #181a23;
+      --surface: #23254a;
+      --surface-2: #22243a;
+      --surface-3: #222236;
+      --surface-card: #23243f;
+      --text-main: #ececf1;
+      --text-soft: #c0c3e6;
+      --shadow: 0 2px 18px rgba(20, 20, 34, 0.16);
+      --shadow-card: 0 4px 20px rgba(20, 20, 34, 0.16);
+    }
+
+    html,
+    body {
+      height: 100%;
+      margin: 0;
+      font-family: "Inter", "Arial", sans-serif;
+      background: var(--bg-dark);
+      color: var(--text-main);
+      min-height: 100vh;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    aside.sidebar {
+      width: 250px;
+      background: var(--surface);
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100vh;
+      z-index: 99;
+      min-width: 250px;
+      overflow-y: auto;
+    }
+
+    .sidebar-header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 30px 0 18px 0;
+    }
+
+    .sidebar-header img {
+      width: 82px;
+      height: 82px;
+      border-radius: 50%;
+      object-fit: cover;
+      box-shadow: 0 4px 20px #efd24a55;
+      background: #fff;
+      margin-bottom: 9px;
+    }
+
+    .sidebar-divider {
+      width: 60%;
+      height: 3px;
+      background: linear-gradient(to right, #ffe066 0%, #8267e5 100%);
+      border-radius: 2px;
+      margin-bottom: 12px;
+    }
+
+    .sidebar-logo-text {
+      font-size: 1.24rem;
+      font-weight: 800;
+      color: var(--primary);
+      letter-spacing: 2px;
+      user-select: none;
+      text-shadow: 0 2px 10px #ffe06610;
+      margin-bottom: 19px;
+      text-align: center;
+      white-space: nowrap;
+    }
+
+    .sidebar nav {
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .sidebar nav a,
+    .sidebar nav button {
+      font-weight: 600;
+      font-size: 1.07rem;
+      color: var(--text-main);
+      text-decoration: none;
+      padding: 13px 20px 13px 17px;
+      border-radius: 0 14px 14px 0;
+      display: flex;
+      align-items: center;
+      gap: 1.1rem;
+      background: none;
+      border: none;
+      outline: none;
+      cursor: pointer;
+      transition: background 0.13s, color 0.13s;
+      border-left: 4px solid transparent;
+      margin-left: -1rem;
+    }
+
+    .sidebar nav a.active,
+    .sidebar nav a:hover,
+    .sidebar nav button.active,
+    .sidebar nav button:hover {
+      background: var(--primary);
+      color: #22223a !important;
+      border-left: 4px solid var(--highlight);
+      font-weight: 700;
+    }
+
+    .sidebar nav i {
+      min-width: 33px;
+      min-height: 33px;
+      font-size: 1.32rem;
+      border-radius: 50%;
+      background: #262740;
+      color: var(--highlight);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.15s, color 0.13s;
+    }
+
+    .sidebar nav a.active i,
+    .sidebar nav a:hover i,
+    .sidebar nav button.active i,
+    .sidebar nav button:hover i {
+      background: var(--highlight);
+      color: #fff !important;
+    }
+
+    .dropdown {
+      position: relative;
+    }
+
+    .dropdown-btn {
+      justify-content: space-between;
+    }
+
+    .dropdown .fa-chevron-down {
+      margin-left: auto;
+      font-size: 0.98em;
+      transition: transform 0.19s;
+    }
+
+    .dropdown.open .fa-chevron-down {
+      transform: rotate(180deg);
+    }
+
+    .dropdown-list {
+      display: none;
+      flex-direction: column;
+      padding-left: 34px;
+      background: transparent;
+      margin: 0;
+    }
+
+    .dropdown.open .dropdown-list {
+      display: flex;
+    }
+
+    .dropdown-list a {
+      padding: 7px 10px 7px 20px;
+      font-size: 0.96em;
+      border-radius: 8px;
+      margin-left: 0;
+      border-left: 4px solid transparent;
+    }
+
+    .dropdown-list a.active,
+    .dropdown-list a:hover {
+      background: var(--primary);
+      color: #22223a !important;
+      border-left: 4px solid var(--highlight);
+    }
+
+    .sidebar nav .secondary {
+      color: var(--text-soft);
+      font-weight: 600;
+      opacity: 0.86;
+      font-size: 0.98rem;
+    }
+
+    .sidebar-spacer {
+      flex-grow: 10;
+    }
+
+    main {
+      margin-left: 250px;
+      padding: 2.5rem 3.5rem 2.5rem 3.5rem;
+      flex: 1;
+      min-height: 100vh;
+      background: var(--bg-dark);
+      overflow-y: auto;
+    }
+
+    header.topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2.8rem;
+    }
+
+    .topbar input[type="text"] {
+      width: 100%;
+      max-width: 320px;
+      background: var(--surface-2);
+      color: var(--text-main);
+      padding: 0.75rem 1rem;
+      border-radius: 12px;
+      border: 1.5px solid #3e4159;
+      font-size: 1.02rem;
+      outline: none;
+      box-shadow: 0 1px 8px #ffe06617;
+    }
+
+    .profile-menu-container {
+      position: relative;
+      margin-left: 1.3rem;
+    }
+
+    .profile-avatar-btn {
+      background: var(--highlight);
+      color: #fff;
+      border-radius: 50%;
+      width: 44px;
+      height: 44px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-weight: 800;
+      font-size: 1.1rem;
+      border: 2.5px solid #ffe06655;
+      cursor: pointer;
+      box-shadow: 0 4px 18px var(--primary);
+      border: none;
+      outline: none;
+      transition: background 0.16s, color 0.16s;
+      text-decoration: none;
+    }
+
+    .profile-dropdown {
+      display: none;
+      position: absolute;
+      right: 0;
+      top: 110%;
+      min-width: 180px;
+      background: var(--surface-3);
+      border-radius: 8px;
+      box-shadow: var(--shadow-card);
+      z-index: 40;
+      padding: 0.4em 0.1em;
+      flex-direction: column;
+      color: var(--text-main);
+      text-align: left;
+    }
+
+    .profile-menu-container.open .profile-dropdown {
+      display: flex;
+    }
+
+    .profile-dropdown .profile-meta {
+      font-weight: 800;
+      color: var(--primary);
+      font-size: 1.02em;
+      margin: 0.2em 0 0.2em 0;
+      line-height: 1.2;
+    }
+
+    .profile-dropdown .profile-role {
+      font-size: 1em;
+      padding: 0 1.22em 0.3em 2.15em;
+      color: var(--highlight);
+      font-style: italic;
+      font-weight: 600;
+      opacity: 0.82;
+    }
+
+    .profile-dropdown a,
+    .profile-dropdown button {
+      background: none;
+      border: none;
+      color: var(--text-main);
+      padding: 0.8em 1.25em;
+      text-align: left;
+      cursor: pointer;
+      font-size: 1.07em;
+      font-family: inherit;
+      transition: background 0.13s, color 0.12s;
+      border-radius: 7px;
+      display: flex;
+      align-items: center;
+      gap: 0.7em;
+      text-decoration: none !important;
+    }
+
+    .profile-dropdown a:hover,
+    .profile-dropdown button:hover {
+      background: var(--primary);
+      color: #22223a;
+    }
+
+    .profile-dropdown i {
+      color: var(--highlight);
+      font-size: 1.02em;
+    }
+
+    .notif-btn {
+      background: none;
+      outline: none;
+      border: none;
+      padding: 0;
+      margin: 0 11px 0 0;
+      position: relative;
+      cursor: pointer;
+      text-decoration: none !important;
+    }
+
+    .notif-btn i {
+      font-size: 1.54em;
+      color: var(--highlight);
+      background: transparent;
+      border-radius: 50%;
+      transition: background 0.12s, color 0.13s;
+      padding: 7px 9px;
+    }
+
+    .notif-btn:hover i {
+      background: #23243f;
+      color: var(--primary);
+    }
+
+    h1 {
+      font-weight: 800;
+      font-size: 2.3rem;
+      margin: 0 0 0.6rem 0;
+      color: var(--primary);
+    }
+
+    p {
+      font-size: 1.07rem;
+      margin: 0 0 1.8rem 0;
+      opacity: 0.88;
+      color: var(--text-soft);
+    }
+
+    .cart-main-wrap {
+      display: flex;
+      gap: 2.5rem;
+      align-items: flex-start;
+      flex-wrap: wrap;
+    }
+
+    .cart-section {
+      flex: 1 1 420px;
+      background: var(--surface-card);
+      padding: 2rem 2rem;
+      border-radius: 15px;
+      box-shadow: var(--shadow);
+    }
+
+    .cart-section h2 {
+      color: var(--primary);
+      font-size: 1.28rem;
+      font-weight: 800;
+      margin-bottom: 1.4rem;
+    }
+
+    .cart-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1.1rem;
+    }
+
+    .cart-item {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+      background: var(--surface-2);
+      border-radius: 12px;
+      padding: 1rem 1.1rem;
+      box-shadow: 0 2px 7px #8267e533;
+    }
+
+    .cart-thumb {
+      width: 64px;
+      height: 64px;
+      flex-shrink: 0;
+      border-radius: 10px;
+      background: #fff;
+      object-fit: cover;
+    }
+
+    .cart-dets {
+      flex: 1;
+    }
+
+    .cart-title {
+      font-weight: 700;
+      font-size: 1.09rem;
+      margin-bottom: 3px;
+    }
+
+    .cart-instructor {
+      font-size: 0.98rem;
+      color: var(--primary);
+      margin-bottom: 3px;
+    }
+
+    .cart-price-row {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .cart-price {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--highlight);
+    }
+
+    .cart-qty-wrap {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+
+    .cart-qty-btn {
+      background: var(--surface-card);
+      color: var(--highlight);
+      border: none;
+      font-size: 1.14rem;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.15s;
+    }
+
+    .cart-qty-btn:hover {
+      background: var(--highlight);
+      color: #fff;
+    }
+
+    .cart-qty-val {
+      padding: 6px 12px;
+      min-width: 28px;
+      font-weight: 700;
+      border-radius: 7px;
+      background: var(--surface-3);
+      color: var(--text-soft);
+    }
+
+    .cart-remove-btn {
+      background: none;
+      border: none;
+      color: var(--primary);
+      font-size: 1.26rem;
+      margin-left: 9px;
+      cursor: pointer;
+      transition: color 0.13s;
+    }
+
+    .cart-remove-btn:hover {
+      color: #fe6a6a;
+    }
+
+    .cart-empty-txt {
+      font-size: 1.17rem;
+      color: var(--text-soft);
+      font-weight: 600;
+      text-align: center;
+      margin: 2.2rem 0;
+    }
+
+    .cart-summary {
+      flex: 0 1 310px;
+      background: var(--surface-card);
+      border-radius: 15px;
+      box-shadow: var(--shadow);
+      padding: 2rem 2rem;
+    }
+
+    .cart-summary h3 {
+      color: var(--primary);
+      font-size: 1.19rem;
+      font-weight: 800;
+      margin-bottom: 1.2rem;
+    }
+
+    .cart-summary-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 1.1rem;
+      font-size: 1.09rem;
+    }
+
+    .cart-summary-label {
+      color: var(--text-soft);
+    }
+
+    .cart-summary-total {
+      font-size: 1.24rem;
+      color: var(--highlight);
+      font-weight: 800;
+    }
+
+    .promo-row {
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+    }
+
+    .promo-input {
+      width: 70%;
+      padding: 7px 9px;
+      border-radius: 8px;
+      background: var(--surface-2);
+      color: var(--text-main);
+      border: 1px solid var(--highlight);
+      font-size: 1rem;
+    }
+
+    .promo-btn,
+    .remove-promo-btn {
+      margin-left: 10px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 7px 18px;
+      background: var(--highlight);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.16s;
+    }
+
+    .promo-btn:hover,
+    .remove-promo-btn:hover {
+      background: var(--primary);
+      color: var(--highlight);
+    }
+
+    .cart-checkout-btn {
+      display: block;
+      width: 100%;
+      padding: 1.09em;
+      font-weight: 800;
+      font-size: 1.08rem;
+      margin-top: 1.3rem;
+      border: none;
+      border-radius: 11px;
+      background: var(--primary);
+      color: #22223a;
+      cursor: pointer;
+      transition: background 0.18s;
+    }
+
+    .cart-checkout-btn:hover {
+      background: var(--highlight);
+      color: #fff;
+    }
+
+    .cart-promo-message {
+      font-size: 0.98rem;
+      color: var(--primary);
+      min-height: 24px;
+      margin-bottom: 8px;
+    }
+
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(30, 30, 40, 0.66);
+      z-index: 199;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: var(--surface-3);
+      padding: 2rem 2.4rem;
+      border-radius: 13px;
+      box-shadow: 0 8px 40px #8267e5bb;
+      z-index: 200;
+      min-width: 320px;
+      max-width: 90vw;
+    }
+
+    .modal.active,
+    .modal-overlay.active {
+      display: block;
+    }
+
+    .modal-header {
+      font-size: 1.18rem;
+      font-weight: 700;
+      margin-bottom: 1.15em;
+      color: var(--primary);
+    }
+
+    .modal-actions {
+      margin-top: 1.2em;
+      display: flex;
+      justify-content: flex-end;
+      gap: 1.1em;
+    }
+
+    .modal-actions button {
+      padding: 0.59em 1.48em;
+      border: none;
+      border-radius: 9px;
+      font-weight: 700;
+      cursor: pointer;
+      font-size: 1.03em;
+    }
+
+    .modal-actions .send-btn {
+      background: var(--highlight);
+      color: #fff;
+    }
+
+    .modal-actions .cancel-btn {
+      background: var(--primary);
+      color: #22223a;
+    }
+
+    .modal-actions .send-btn:hover {
+      background: var(--primary);
+      color: var(--highlight);
+    }
+
+    .modal-actions .cancel-btn:hover {
+      background: var(--highlight);
+      color: #fff;
+    }
+
+    @media (max-width: 1100px) {
+      .cart-main-wrap {
+        flex-direction: column;
+        gap: 2.4rem;
+      }
+    }
+
+    @media (max-width: 900px) {
+      aside.sidebar {
+        width: 73px;
+        min-width: 73px;
+      }
+
+      .sidebar-header,
+      .sidebar-logo-text,
+      .sidebar-divider {
+        display: none !important;
+      }
+
+      main {
+        margin-left: 73px;
+        padding: 2rem 1.2rem 2rem 1.2rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <img src="/assets/images/logo.png" alt="SkillSpark Logo" />
+      <div class="sidebar-divider"></div>
+      <div class="sidebar-logo-text">SkillSpark</div>
+    </div>
+    <nav>
+      <a href="/pages/dashboard.html"><i class="fa-solid fa-house"></i> <span>Dashboard</span></a>
+      <a href="/pages/calendar.html"><i class="fa-solid fa-calendar-days"></i> <span>Calendar</span></a>
+      <div class="dropdown" id="coursesMenu">
+        <button class="dropdown-btn" aria-haspopup="true" aria-expanded="false">
+          <i class="fa-solid fa-layer-group"></i> <span>Courses</span>
+          <i class="fa-solid fa-chevron-down"></i>
+        </button>
+        <div class="dropdown-list" role="menu" aria-label="Courses submenu">
+          <a href="/pages/my-courses.html"><i class="fa-solid fa-graduation-cap"></i>
+            <span>My Courses</span></a>
+          <a href="/pages/browse-courses.html"><i class="fa-solid fa-book"></i> <span>Browse Courses</span></a>
+        </div>
+      </div>
+      <a href="/pages/community.html"><i class="fa-solid fa-users"></i> <span>Community</span></a>
+      <a href="/pages/cart.html" class="active"><i class="fa-solid fa-cart-shopping"></i> <span>Cart</span></a>
+      <a href="/pages/membership.html" class="secondary"><i class="fa-solid fa-crown"></i> <span>Membership</span></a>
+      <a href="/pages/help.html"><i class="fa-solid fa-circle-question"></i> <span>Help</span></a>
+      <div class="sidebar-spacer"></div>
+    </nav>
+  </aside>
+  <main>
+    <header class="topbar">
+      <input type="text" id="cartSearchInput" placeholder="Search cart items..." aria-label="Cart search" />
+      <div style="display: flex; align-items: center; gap: 0.4rem">
+        <button class="notif-btn" title="Notifications" aria-label="Notifications">
+          <i class="fa-solid fa-bell"></i>
+        </button>
+        <div class="profile-menu-container" id="profileMenuWrap">
+          <button class="profile-avatar-btn" id="profileAvatarBtn" aria-haspopup="true" aria-expanded="false">
+            <span id="profileInitials">L</span>
+          </button>
+          <div class="profile-dropdown" id="profileDropdown">
+            <div class="profile-meta" id="profileName">Lokesh G</div>
+            <div class="profile-role" id="profileRole" style="display: none">
+              Pro Member
+            </div>
+            <a href="#"><i class="fa-solid fa-user"></i> Profile</a>
+            <a href="#"><i class="fa-solid fa-gear"></i> Settings</a>
+            <button type="button">
+              <i class="fa-solid fa-arrow-right-from-bracket"></i> Logout
+            </button>
+          </div>
+        </div>
+      </div>
+    </header>
+    <h1>Cart</h1>
+    <p>View and manage your selected courses before checkout.</p>
+
+    <div class="cart-main-wrap">
+      <section class="cart-section">
+        <h2>Your Cart</h2>
+        <div class="cart-list" id="cartList"></div>
+      </section>
+      <section class="cart-summary">
+        <h3>Order Summary</h3>
+        <div class="cart-summary-row">
+          <span class="cart-summary-label">Subtotal</span>
+          <span id="cartSubtotal" class="cart-summary-total">₹0</span>
+        </div>
+        <div class="promo-row" id="promoRow">
+          <input type="text" class="promo-input" id="promoInput" placeholder="Promo code" />
+          <button class="promo-btn" id="promoBtn">Apply</button>
+        </div>
+        <div id="removePromoWrap" style="display: none; margin-bottom: 10px">
+          <button class="remove-promo-btn" id="removePromoBtn" type="button">
+            Remove Promo
+          </button>
+        </div>
+        <div class="cart-promo-message" id="cartPromoMsg"></div>
+        <hr style="border: 1px solid var(--surface-2); margin: 1.2em 0" />
+        <div class="cart-summary-row" style="font-size: 1.15rem; font-weight: 700">
+          <span>Total</span>
+          <span id="cartTotal" class="cart-summary-total">₹0</span>
+        </div>
+        <button class="cart-checkout-btn" id="checkoutBtn">
+          Proceed to Checkout
+        </button>
+      </section>
+    </div>
+
+    <div class="modal-overlay" id="modalOverlay"></div>
+    <div class="modal" id="checkoutModal" role="dialog" aria-modal="true" aria-labelledby="checkoutModalTitle">
+      <div class="modal-header" id="checkoutModalTitle">
+        Order Confirmation
+      </div>
+      <div id="checkoutSummary" style="margin-bottom: 18px; color: var(--text-main)"></div>
+      <div class="modal-actions">
+        <button type="button" class="send-btn" id="finalizeOrderBtn">
+          Confirm Order
+        </button>
+        <button type="button" class="cancel-btn" id="cancelCheckoutBtn">
+          Cancel
+        </button>
+      </div>
+      <div id="confirmationMsg" style="
+            margin-top: 20px;
+            font-size: 1.08em;
+            color: var(--highlight);
+            font-weight: 700;
+            display: none;
+          "></div>
+    </div>
+  </main>
+  <script>
+    // Sidebar, profile as before...
+    const coursesMenu = document.getElementById("coursesMenu");
+    coursesMenu.querySelector(".dropdown-btn").onclick = function (e) {
+      e.stopPropagation();
+      coursesMenu.classList.toggle("open");
+    };
+    document.body.addEventListener("click", function (e) {
+      if (!coursesMenu.contains(e.target))
+        coursesMenu.classList.remove("open");
+    });
+    const user = { initials: "L", name: "Lokesh G", member: "pro" };
+    document.getElementById("profileInitials").textContent = user.initials;
+    document.getElementById("profileName").textContent = user.name;
+    const profileRole = document.getElementById("profileRole");
+    if (user.member === "pro") {
+      profileRole.textContent = "Pro Member";
+      profileRole.style.display = "block";
+    } else if (user.member === "premium") {
+      profileRole.textContent = "Premium Member";
+      profileRole.style.display = "block";
+    } else {
+      profileRole.style.display = "none";
+    }
+    const profileBtn = document.getElementById("profileAvatarBtn"),
+      profileWrap = document.getElementById("profileMenuWrap");
+    profileBtn.onclick = function (e) {
+      e.stopPropagation();
+      profileWrap.classList.toggle("open");
+      profileBtn.setAttribute(
+        "aria-expanded",
+        profileWrap.classList.contains("open")
+      );
+    };
+    document.body.addEventListener("click", function (e) {
+      if (!profileWrap.contains(e.target)) {
+        profileWrap.classList.remove("open");
+        profileBtn.setAttribute("aria-expanded", "false");
+      }
+    });
+    // Cart logic starts here
+    const CART_KEY = "lms_cart";
+    const PROMO_KEY = "lms_promo";
+    const PROMO_AMOUNT = 100;
+    let cartItems = loadCart();
+    let promoApplied = !!localStorage.getItem(PROMO_KEY);
+    let cartQuery = ""; // For search filter
+    function loadCart() {
+      let saved = localStorage.getItem(CART_KEY);
+      if (saved) return JSON.parse(saved);
+      return [
+        {
+          id: 1,
+          title: "Data Analytics",
+          instructor: "Ananya Rao",
+          price: 200, // ₹
+          qty: 1,
+          thumb: "https://placehold.co/80x80/2a2a4d/ffe066?text=Excel",
+        },
+        {
+          id: 2,
+          title: "Cyber Security",
+          instructor: "Anjali Singh",
+          price: 300, // ₹
+          qty: 2,
+          thumb: "https://placehold.co/80x80/2a2a4d/ffe066?text=CS",
+        },
+      ];
+    }
+    function saveCart() {
+      localStorage.setItem(CART_KEY, JSON.stringify(cartItems));
+    }
+    function setPromo(applied) {
+      promoApplied = applied;
+      if (applied) localStorage.setItem(PROMO_KEY, "1");
+      else localStorage.removeItem(PROMO_KEY);
+    }
+    function updatePromoUI() {
+      const promoInput = document.getElementById("promoInput");
+      const promoBtn = document.getElementById("promoBtn");
+      const removePromoWrap = document.getElementById("removePromoWrap");
+      if (promoApplied) {
+        promoInput.value = "LMS20";
+        promoInput.setAttribute("disabled", "disabled");
+        promoBtn.style.display = "none";
+        removePromoWrap.style.display = "block";
+      } else {
+        promoInput.value = "";
+        promoInput.removeAttribute("disabled");
+        promoBtn.style.display = "block";
+        removePromoWrap.style.display = "none";
+      }
+      const msg = document.getElementById("cartPromoMsg");
+      if (promoApplied) {
+        msg.textContent = `Promo code LMS20 applied! ₹${PROMO_AMOUNT} off your order.`;
+        msg.style.color = "#41dd69";
+      } else {
+        msg.textContent = "No promo code applied.";
+        msg.style.color = "var(--primary)";
+      }
+    }
+    function renderCart() {
+      const cartList = document.getElementById("cartList");
+      cartList.innerHTML = "";
+      let filtered = cartItems.filter((item) => {
+        if (!cartQuery) return true;
+        const query = cartQuery.toLowerCase();
+        return (
+          item.title.toLowerCase().includes(query) ||
+          item.instructor.toLowerCase().includes(query)
+        );
+      });
+      if (filtered.length === 0) {
+        cartList.innerHTML = `<div class="cart-empty-txt">No items found.</div>`;
+      }
+      filtered.forEach((item, i) => {
+        let el = document.createElement("div");
+        el.className = "cart-item";
+        el.dataset.id = item.id;
+        el.innerHTML = `
+          <img class="cart-thumb" src="${item.thumb}" alt="Course thumbnail">
+          <div class="cart-dets">
+            <div class="cart-title">${item.title}</div>
+            <div class="cart-instructor">by ${item.instructor}</div>
+            <div class="cart-price-row">
+              <span class="cart-price">₹${item.price}</span>
+              <span class="cart-qty-wrap">
+                <button class="cart-qty-btn" data-act="dec" aria-label="Decrease quantity"><i class="fa fa-minus"></i></button>
+                <span class="cart-qty-val">${item.qty}</span>
+                <button class="cart-qty-btn" data-act="inc" aria-label="Increase quantity"><i class="fa fa-plus"></i></button>
+              </span>
+              <button class="cart-remove-btn" aria-label="Remove course"><i class="fa fa-trash"></i></button>
+            </div>
+          </div>
+        `;
+        el.querySelectorAll(".cart-qty-btn").forEach((btn) => {
+          btn.onclick = function () {
+            let act = btn.getAttribute("data-act");
+            if (act === "dec" && item.qty > 1) {
+              item.qty--;
+            }
+            if (act === "inc") {
+              item.qty++;
+            }
+            saveCart();
+            renderCart();
+            updateSummary();
+          };
+        });
+        el.querySelector(".cart-remove-btn").onclick = function () {
+          const idx = cartItems.findIndex((ci) => ci.id === item.id);
+          if (confirm("Remove this course from cart?")) {
+            cartItems.splice(idx, 1);
+            saveCart();
+            renderCart();
+            updateSummary();
+          }
+        };
+        cartList.appendChild(el);
+      });
+      updateSummary();
+      updatePromoUI();
+    }
+    function updateSummary() {
+      let subtotal = cartItems.reduce((a, b) => a + b.price * b.qty, 0);
+      let total = promoApplied
+        ? subtotal > 0
+          ? Math.max(1, subtotal - PROMO_AMOUNT)
+          : 0
+        : subtotal;
+      document.getElementById("cartSubtotal").textContent = "₹" + subtotal;
+      document.getElementById("cartTotal").textContent = "₹" + total;
+    }
+    document.getElementById("promoBtn").onclick = function () {
+      const promoInput = document.getElementById("promoInput");
+      const msg = document.getElementById("cartPromoMsg");
+      let val = promoInput.value.trim().toLowerCase();
+      if (val === "lms20" && !promoApplied) {
+        setPromo(true);
+        updatePromoUI();
+        updateSummary();
+      } else if (promoApplied) {
+        msg.textContent = "Promo already applied.";
+        msg.style.color = "var(--primary)";
+      } else {
+        msg.textContent = "Invalid promo code.";
+        msg.style.color = "#FE6A6A";
+      }
+    };
+    document.getElementById("removePromoBtn").onclick = function () {
+      setPromo(false);
+      updatePromoUI();
+      updateSummary();
+    };
+    // Checkout modal
+    const checkoutBtn = document.getElementById("checkoutBtn");
+    const modalOverlay = document.getElementById("modalOverlay");
+    const checkoutModal = document.getElementById("checkoutModal");
+    const checkoutSummary = document.getElementById("checkoutSummary");
+    const finalizeOrderBtn = document.getElementById("finalizeOrderBtn");
+    const cancelCheckoutBtn = document.getElementById("cancelCheckoutBtn");
+    const confirmationMsg = document.getElementById("confirmationMsg");
+    checkoutBtn.onclick = function () {
+      if (cartItems.length === 0) {
+        alert("Your cart is empty.");
+        return;
+      }
+      let list = cartItems
+        .map(
+          (item) =>
+            `<div style="margin-bottom:7px;">
+          <strong>${item.title}</strong> (x${item.qty})<br>
+          <span style="color:var(--text-soft); font-size:0.97em;">by ${item.instructor}</span>
+        </div>`
+        )
+        .join("");
+      let subtotal = cartItems.reduce((a, b) => a + b.price * b.qty, 0);
+      let total = promoApplied
+        ? subtotal > 0
+          ? Math.max(1, subtotal - PROMO_AMOUNT)
+          : 0
+        : subtotal;
+      let promoTxt = promoApplied
+        ? `<span style='color:var(--highlight);font-size:1em;'>(Promo: -₹${PROMO_AMOUNT})</span><br>`
+        : "";
+      checkoutSummary.innerHTML = `${list}<hr style="margin:0.7em 0;">${promoTxt}<div><strong>Total:</strong> ₹${total}</div>`;
+      confirmationMsg.style.display = "none";
+      modalOverlay.classList.add("active");
+      checkoutModal.classList.add("active");
+    };
+    cancelCheckoutBtn.onclick = function () {
+      modalOverlay.classList.remove("active");
+      checkoutModal.classList.remove("active");
+    };
+    modalOverlay.addEventListener("click", function () {
+      modalOverlay.classList.remove("active");
+      checkoutModal.classList.remove("active");
+    });
+    finalizeOrderBtn.onclick = function () {
+      cartItems = [];
+      promoApplied = false;
+      saveCart();
+      setPromo(false);
+      renderCart();
+      confirmationMsg.textContent = "Thank you! Your order has been placed.";
+      confirmationMsg.style.display = "block";
+      setTimeout(() => {
+        modalOverlay.classList.remove("active");
+        checkoutModal.classList.remove("active");
+      }, 1200);
+    };
+    window.addEventListener("storage", function () {
+      cartItems = loadCart();
+      promoApplied = !!localStorage.getItem("lms_promo");
+      renderCart();
+      updateSummary();
+    });
+    // Cart Search functionality
+    document
+      .getElementById("cartSearchInput")
+      .addEventListener("input", function (e) {
+        cartQuery = e.target.value.trim();
+        renderCart();
+      });
+    renderCart();
+    updateSummary();
+    updatePromoUI();
+  </script>
+</body>
+
+</html>

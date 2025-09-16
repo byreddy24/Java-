@@ -1,0 +1,1014 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>LMS – Community</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --primary: #ffe066;
+      --highlight: #8267e5;
+      --bg-dark: #181a23;
+      --surface: #23254a;
+      --surface-2: #22243a;
+      --surface-3: #222236;
+      --surface-card: #23243f;
+      --text-main: #ececf1;
+      --text-soft: #c0c3e6;
+      --shadow: 0 2px 18px rgba(20, 20, 34, 0.16);
+      --shadow-card: 0 4px 20px rgba(20, 20, 34, 0.16);
+    }
+
+    html,
+    body {
+      height: 100%;
+      margin: 0;
+      font-family: "Inter", "Arial", sans-serif;
+      background: var(--bg-dark);
+      color: var(--text-main);
+      min-height: 100vh;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    aside.sidebar {
+      width: 250px;
+      background: var(--surface);
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100vh;
+      z-index: 99;
+      min-width: 250px;
+      overflow-y: auto;
+    }
+
+    .sidebar-header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 30px 0 18px 0;
+    }
+
+    .sidebar-header img {
+      width: 82px;
+      height: 82px;
+      border-radius: 50%;
+      object-fit: cover;
+      box-shadow: 0 4px 20px #efd24a55;
+      background: #fff;
+      margin-bottom: 9px;
+    }
+
+    .sidebar-divider {
+      width: 60%;
+      height: 3px;
+      background: linear-gradient(to right, #ffe066 0%, #8267e5 100%);
+      border-radius: 2px;
+      margin-bottom: 12px;
+    }
+
+    .sidebar-logo-text {
+      font-size: 1.24rem;
+      font-weight: 800;
+      color: var(--primary);
+      letter-spacing: 2px;
+      user-select: none;
+      text-shadow: 0 2px 10px #ffe06610;
+      margin-bottom: 19px;
+      text-align: center;
+      white-space: nowrap;
+    }
+
+    .sidebar nav {
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .sidebar nav a,
+    .sidebar nav button {
+      font-weight: 600;
+      font-size: 1.07rem;
+      color: var(--text-main);
+      text-decoration: none;
+      padding: 13px 20px 13px 17px;
+      border-radius: 0 14px 14px 0;
+      display: flex;
+      align-items: center;
+      gap: 1.1rem;
+      background: none;
+      border: none;
+      outline: none;
+      cursor: pointer;
+      transition: background 0.13s, color 0.13s;
+      border-left: 4px solid transparent;
+      margin-left: -1rem;
+    }
+
+    .sidebar nav a.active,
+    .sidebar nav a:hover,
+    .sidebar nav button.active,
+    .sidebar nav button:hover {
+      background: var(--primary);
+      color: #22223a !important;
+      border-left: 4px solid var(--highlight);
+      font-weight: 700;
+    }
+
+    .sidebar nav i {
+      min-width: 33px;
+      min-height: 33px;
+      font-size: 1.32rem;
+      border-radius: 50%;
+      background: #262740;
+      color: var(--highlight);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.15s, color 0.13s;
+    }
+
+    .sidebar nav a.active i,
+    .sidebar nav a:hover i,
+    .sidebar nav button.active i,
+    .sidebar nav button:hover i {
+      background: var(--highlight);
+      color: #fff !important;
+    }
+
+    .dropdown {
+      position: relative;
+    }
+
+    .dropdown-btn {
+      justify-content: space-between;
+    }
+
+    .dropdown .fa-chevron-down {
+      margin-left: auto;
+      font-size: 0.98em;
+      transition: transform 0.19s;
+    }
+
+    .dropdown.open .fa-chevron-down {
+      transform: rotate(180deg);
+    }
+
+    .dropdown-list {
+      display: none;
+      flex-direction: column;
+      padding-left: 34px;
+      background: transparent;
+      margin: 0;
+    }
+
+    .dropdown.open .dropdown-list {
+      display: flex;
+    }
+
+    .dropdown-list a {
+      padding: 7px 10px 7px 20px;
+      font-size: 0.96em;
+      border-radius: 8px;
+      margin-left: 0;
+      border-left: 4px solid transparent;
+    }
+
+    .dropdown-list a.active,
+    .dropdown-list a:hover {
+      background: var(--primary);
+      color: #22223a !important;
+      border-left: 4px solid var(--highlight);
+    }
+
+    .sidebar nav .secondary {
+      color: var(--text-soft);
+      font-weight: 600;
+      opacity: 0.86;
+      font-size: 0.98rem;
+    }
+
+    .sidebar-spacer {
+      flex-grow: 10;
+    }
+
+    .sidebar-footer {
+      padding-left: 7px;
+      padding-bottom: 22px;
+    }
+
+    .sidebar-footer a {
+      color: var(--text-main);
+      font-size: 1.07rem;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 1em;
+      padding: 13px 20px 13px 17px;
+      border-radius: 0 14px 14px 0;
+      transition: background 0.13s, color 0.13s;
+      border-left: 4px solid transparent;
+      margin-left: -1rem;
+      font-weight: 600;
+    }
+
+    .sidebar-footer a.active,
+    .sidebar-footer a:hover {
+      background: var(--primary);
+      color: #22223a !important;
+      border-left: 4px solid var(--highlight);
+    }
+
+    .sidebar-footer a i {
+      min-width: 33px;
+      min-height: 33px;
+      font-size: 1.32rem;
+      border-radius: 50%;
+      background: #262740;
+      color: var(--highlight);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.15s, color 0.13s;
+    }
+
+    .sidebar-footer a.active i,
+    .sidebar-footer a:hover i {
+      background: var(--highlight);
+      color: #fff !important;
+    }
+
+    main {
+      margin-left: 250px;
+      padding: 2.5rem 3.5rem 2.5rem 3.5rem;
+      flex: 1;
+      min-height: 100vh;
+      background: var(--bg-dark);
+      overflow-y: auto;
+    }
+
+    header.topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2.8rem;
+    }
+
+    .topbar input[type="text"] {
+      width: 100%;
+      max-width: 320px;
+      background: var(--surface-2);
+      color: var(--text-main);
+      padding: 0.75rem 1rem;
+      border-radius: 12px;
+      border: 1.5px solid #3e4159;
+      font-size: 1.02rem;
+      outline: none;
+      box-shadow: 0 1px 8px #ffe06617;
+    }
+
+    .profile-menu-container {
+      position: relative;
+      margin-left: 1.3rem;
+    }
+
+    .profile-avatar-btn {
+      background: var(--highlight);
+      color: #fff;
+      border-radius: 50%;
+      width: 44px;
+      height: 44px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-weight: 800;
+      font-size: 1.1rem;
+      border: 2.5px solid #ffe06655;
+      cursor: pointer;
+      box-shadow: 0 4px 18px var(--primary);
+      border: none;
+      outline: none;
+      transition: background 0.16s, color 0.16s;
+      text-decoration: none;
+    }
+
+    .profile-dropdown {
+      display: none;
+      position: absolute;
+      right: 0;
+      top: 110%;
+      min-width: 180px;
+      background: var(--surface-3);
+      border-radius: 8px;
+      box-shadow: var(--shadow-card);
+      z-index: 40;
+      padding: 0.4em 0.1em;
+      flex-direction: column;
+      color: var(--text-main);
+      text-align: left;
+    }
+
+    .profile-menu-container.open .profile-dropdown {
+      display: flex;
+    }
+
+    .profile-dropdown .profile-meta {
+      font-weight: 800;
+      color: var(--primary);
+      font-size: 1.02em;
+      margin: 0.2em 0 0.2em 0;
+      line-height: 1.2;
+    }
+
+    .profile-dropdown .profile-role {
+      font-size: 1em;
+      padding: 0 1.22em 0.3em 2.15em;
+      color: var(--highlight);
+      font-style: italic;
+      font-weight: 600;
+      opacity: 0.82;
+    }
+
+    .profile-dropdown a,
+    .profile-dropdown button {
+      background: none;
+      border: none;
+      color: var(--text-main);
+      padding: 0.8em 1.25em;
+      text-align: left;
+      cursor: pointer;
+      font-size: 1.07em;
+      font-family: inherit;
+      transition: background 0.13s, color 0.12s;
+      border-radius: 7px;
+      display: flex;
+      align-items: center;
+      gap: 0.7em;
+      text-decoration: none !important;
+    }
+
+    .profile-dropdown a:hover,
+    .profile-dropdown button:hover {
+      background: var(--primary);
+      color: #22223a;
+    }
+
+    .profile-dropdown i {
+      color: var(--highlight);
+      font-size: 1.02em;
+    }
+
+    .notif-btn {
+      background: none;
+      outline: none;
+      border: none;
+      padding: 0;
+      margin: 0 11px 0 0;
+      position: relative;
+      cursor: pointer;
+      text-decoration: none !important;
+    }
+
+    .notif-btn i {
+      font-size: 1.54em;
+      color: var(--highlight);
+      background: transparent;
+      border-radius: 50%;
+      transition: background 0.12s, color 0.13s;
+      padding: 7px 9px;
+    }
+
+    .notif-btn:hover i {
+      background: #23243f;
+      color: var(--primary);
+    }
+
+    h1 {
+      font-weight: 800;
+      font-size: 2.3rem;
+      margin: 0 0 0.6rem 0;
+      color: var(--primary);
+    }
+
+    p {
+      font-size: 1.07rem;
+      margin: 0 0 1.8rem 0;
+      opacity: 0.88;
+      color: var(--text-soft);
+    }
+
+    .community-members,
+    .community-discussions {
+      margin-top: 2.5rem;
+      background: var(--surface-card);
+      padding: 1.7rem 2rem;
+      border-radius: 15px;
+      box-shadow: var(--shadow);
+      max-width: 1000px;
+    }
+
+    .community-members h2,
+    .community-discussions h2 {
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 1rem;
+    }
+
+    .members-list {
+      display: flex;
+      gap: 1.7rem;
+      flex-wrap: wrap;
+    }
+
+    .member-card {
+      background: var(--surface-2);
+      border-radius: 12px;
+      padding: 1rem 1.2rem;
+      flex: 1 1 220px;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      box-shadow: 0 0 10px rgba(130, 103, 229, 0.3);
+      transition: background 0.3s;
+      user-select: none;
+    }
+
+    .member-card:hover {
+      background: var(--highlight);
+      color: #fff;
+    }
+
+    .avatar {
+      background: var(--highlight);
+      color: #fff;
+      font-weight: 800;
+      font-size: 1.3rem;
+      border-radius: 50%;
+      width: 46px;
+      height: 46px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 8px #8267e5cc;
+      flex-shrink: 0;
+    }
+
+    .member-info {
+      flex-grow: 1;
+    }
+
+    .member-name {
+      font-weight: 700;
+      font-size: 1.09rem;
+    }
+
+    .member-role {
+      font-size: 0.86rem;
+      color: var(--primary);
+      font-style: italic;
+      margin-top: 2px;
+      opacity: 0.85;
+    }
+
+    .btn-message {
+      background: transparent;
+      border: none;
+      color: var(--primary);
+      font-size: 1.3rem;
+      cursor: pointer;
+      outline: none;
+      padding: 7px;
+      border-radius: 8px;
+      transition: background 0.2s, color 0.2s;
+      flex-shrink: 0;
+      user-select: none;
+    }
+
+    .btn-message:hover {
+      background: var(--primary);
+      color: var(--surface-dark, #22223a);
+    }
+
+    .community-discussions .discussion-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      max-width: 800px;
+    }
+
+    .discussion-item {
+      background: var(--surface-2);
+      border-radius: 12px;
+      padding: 1.3rem 1.4rem;
+      box-shadow: 0 1px 12px rgba(130, 103, 229, 0.3);
+      user-select: none;
+    }
+
+    .discussion-header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 0.7rem;
+      color: var(--primary);
+    }
+
+    .discussion-header .avatar {
+      width: 38px;
+      height: 38px;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+    }
+
+    .discussion-header strong {
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    .discussion-time {
+      margin-left: auto;
+      font-size: 0.9rem;
+      opacity: 0.6;
+      font-style: italic;
+    }
+
+    .discussion-item p {
+      margin: 0 0 0.9rem 0;
+      color: var(--text-soft);
+      font-size: 1.02rem;
+      line-height: 1.3;
+    }
+
+    .btn-reply {
+      background: var(--primary);
+      color: #22223a;
+      border: none;
+      padding: 0.55rem 1.1rem;
+      font-weight: 700;
+      border-radius: 12px;
+      cursor: pointer;
+      font-size: 0.97rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: background 0.2s;
+      user-select: none;
+    }
+
+    .btn-reply i {
+      font-size: 1.1rem;
+    }
+
+    .btn-reply:hover {
+      background: var(--highlight);
+      color: #fff;
+    }
+
+    .replies-list {
+      margin-top: 1em;
+      padding-left: 1.4em;
+    }
+
+    .reply {
+      margin-bottom: 0.8em;
+    }
+
+    .reply .reply-meta {
+      color: var(--highlight);
+      font-weight: 600;
+      font-size: 0.98em;
+      display: inline-block;
+      margin-bottom: 2px;
+    }
+
+    .reply-content {
+      margin: 0 0 0.35em 0;
+      color: var(--text-soft);
+      font-size: 1em;
+    }
+
+    /* Modal Styles */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(30, 30, 40, 0.66);
+      z-index: 199;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: var(--surface-3);
+      padding: 2rem 2.4rem;
+      border-radius: 13px;
+      box-shadow: 0 8px 40px #8267e5bb;
+      z-index: 200;
+      min-width: 320px;
+      max-width: 90vw;
+    }
+
+    .modal.active,
+    .modal-overlay.active {
+      display: block;
+    }
+
+    .modal-header {
+      font-size: 1.18rem;
+      font-weight: 700;
+      margin-bottom: 1.15em;
+      color: var(--primary);
+    }
+
+    .modal label {
+      display: block;
+      font-weight: 600;
+      margin: 0 0 7px 0;
+    }
+
+    .modal textarea {
+      width: 100%;
+      font-size: 1.1em;
+      padding: 0.8em;
+      background: var(--surface-card);
+      color: var(--text-main);
+      border: 1.2px solid var(--highlight);
+      border-radius: 9px;
+      resize: vertical;
+      min-height: 70px;
+    }
+
+    .modal-actions {
+      margin-top: 1.2em;
+      display: flex;
+      justify-content: flex-end;
+      gap: 1.1em;
+    }
+
+    .modal-actions button {
+      padding: 0.59em 1.48em;
+      border: none;
+      border-radius: 9px;
+      font-weight: 700;
+      cursor: pointer;
+      font-size: 1.03em;
+    }
+
+    .modal-actions .send-btn {
+      background: var(--highlight);
+      color: #fff;
+    }
+
+    .modal-actions .cancel-btn {
+      background: var(--primary);
+      color: #22223a;
+    }
+
+    .modal-actions .send-btn:hover {
+      background: var(--primary);
+      color: var(--highlight);
+    }
+
+    .modal-actions .cancel-btn:hover {
+      background: var(--highlight);
+      color: #fff;
+    }
+
+    @media (max-width: 900px) {
+      aside.sidebar {
+        width: 73px;
+        min-width: 73px;
+      }
+
+      .sidebar-header,
+      .sidebar-logo-text,
+      .sidebar-divider {
+        display: none !important;
+      }
+
+      main {
+        margin-left: 73px;
+        padding: 2rem 1.5rem 2rem 1.5rem;
+      }
+
+      .members-list {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <img src="/assets/images/logo.png" alt="SkillSpark Logo" />
+      <div class="sidebar-divider"></div>
+      <div class="sidebar-logo-text">SkillSpark</div>
+    </div>
+    <nav>
+      <a href="/pages/dashboard.html"><i class="fa-solid fa-house"></i> <span>Dashboard</span></a>
+      <a href="/pages/calendar.html"><i class="fa-solid fa-calendar-days"></i> <span>Calendar</span></a>
+      <div class="dropdown" id="coursesMenu">
+        <button class="dropdown-btn" aria-haspopup="true" aria-expanded="false">
+          <i class="fa-solid fa-layer-group"></i> <span>Courses</span>
+          <i class="fa-solid fa-chevron-down"></i>
+        </button>
+        <div class="dropdown-list" role="menu" aria-label="Courses submenu">
+          <a href="/pages/my-courses.html"><i class="fa-solid fa-graduation-cap"></i>
+            <span>My Courses</span></a>
+          <a href="/pages/browse-courses.html"><i class="fa-solid fa-book"></i> <span>Browse
+              Courses</span></a>
+        </div>
+      </div>
+      <a href="/pages/community.html" class="active"><i class="fa-solid fa-users"></i> <span>Community</span></a>
+      <a href="/pages/cart.html"><i class="fa-solid fa-cart-shopping"></i> <span>Cart</span></a>
+      <a href="/pages/membership.html" class="secondary"><i class="fa-solid fa-crown"></i> <span>Membership</span></a>
+      <a href="/pages/help.html"><i class="fa-solid fa-circle-question"></i> <span>Help</span></a>
+      <div class="sidebar-spacer"></div>
+    </nav>
+  </aside>
+
+  <main>
+    <header class="topbar">
+      <input type="text" placeholder="Search community members..." aria-label="Community search" />
+      <div style="display: flex; align-items: center; gap: 0.4rem">
+        <button class="notif-btn" title="Notifications" aria-label="Notifications">
+          <i class="fa-solid fa-bell"></i>
+        </button>
+        <div class="profile-menu-container" id="profileMenuWrap">
+          <button class="profile-avatar-btn" id="profileAvatarBtn" aria-haspopup="true" aria-expanded="false">
+            <span id="profileInitials">L</span>
+          </button>
+          <div class="profile-dropdown" id="profileDropdown">
+            <div class="profile-meta" id="profileName">Lokesh G</div>
+            <div class="profile-role" id="profileRole" style="display: none">
+              Pro Member
+            </div>
+            <a href="#"><i class="fa-solid fa-user"></i> Profile</a>
+            <a href="#"><i class="fa-solid fa-gear"></i> Settings</a>
+            <button type="button">
+              <i class="fa-solid fa-arrow-right-from-bracket"></i> Logout
+            </button>
+          </div>
+        </div>
+      </div>
+    </header>
+    <h1>Community</h1>
+    <p>Connect and engage with other members.</p>
+
+    <section class="community-members">
+      <h2>Top Members</h2>
+      <div class="members-list">
+        <div class="member-card" data-member="Alice M">
+          <div class="avatar" aria-hidden="true">A</div>
+          <div class="member-info">
+            <div class="member-name">Alice M</div>
+            <div class="member-role">Pro Member</div>
+          </div>
+          <button class="btn-message" aria-label="Message Alice M">
+            <i class="fa-solid fa-envelope"></i>
+          </button>
+        </div>
+        <div class="member-card" data-member="John D">
+          <div class="avatar" aria-hidden="true">J</div>
+          <div class="member-info">
+            <div class="member-name">John D</div>
+            <div class="member-role">Premium Member</div>
+          </div>
+          <button class="btn-message" aria-label="Message John D">
+            <i class="fa-solid fa-envelope"></i>
+          </button>
+        </div>
+        <div class="member-card" data-member="Sara K">
+          <div class="avatar" aria-hidden="true">S</div>
+          <div class="member-info">
+            <div class="member-name">Sara K</div>
+            <div class="member-role">Free Member</div>
+          </div>
+          <button class="btn-message" aria-label="Message Sara K">
+            <i class="fa-solid fa-envelope"></i>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <section class="community-discussions">
+      <h2>Latest Discussions</h2>
+      <div class="discussion-list">
+        <article class="discussion-item" tabindex="0" aria-label="Discussion by Michael B one hour ago">
+          <div class="discussion-header">
+            <div class="avatar" aria-hidden="true">M</div>
+            <strong class="discussion-author">Michael B</strong>
+            <span class="discussion-time">1h ago</span>
+          </div>
+          <p>
+            How can I improve my JavaScript skills? Any recommended courses or
+            practice challenges?
+          </p>
+          <button class="btn-reply">
+            <i class="fa-solid fa-reply"></i> Reply
+          </button>
+          <div class="replies-list"></div>
+        </article>
+        <article class="discussion-item" tabindex="0" aria-label="Discussion by Linda W three hours ago">
+          <div class="discussion-header">
+            <div class="avatar" aria-hidden="true">L</div>
+            <strong class="discussion-author">Linda W</strong>
+            <span class="discussion-time">3h ago</span>
+          </div>
+          <p>
+            Does anyone have tips for staying motivated on long courses? I
+            tend to lose focus halfway through.
+          </p>
+          <button class="btn-reply">
+            <i class="fa-solid fa-reply"></i> Reply
+          </button>
+          <div class="replies-list"></div>
+        </article>
+      </div>
+    </section>
+
+    <!-- Messaging Modal -->
+    <div class="modal-overlay" id="modalOverlay"></div>
+    <div class="modal" id="messageModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <div class="modal-header" id="modalTitle">Send Message</div>
+      <form id="messageForm">
+        <label for="modalTo">To:</label>
+        <div id="modalTo" style="margin-bottom: 9px; font-weight: 700"></div>
+        <label for="modalMsg">Message:</label>
+        <textarea id="modalMsg" required placeholder="Type your message..."></textarea>
+        <div class="modal-actions">
+          <button type="button" class="cancel-btn">Cancel</button>
+          <button type="submit" class="send-btn">Send</button>
+        </div>
+      </form>
+    </div>
+  </main>
+
+  <script>
+    // Sidebar Dropdown (Courses)
+    const coursesMenu = document.getElementById("coursesMenu");
+    coursesMenu.querySelector(".dropdown-btn").onclick = function (e) {
+      e.stopPropagation();
+      coursesMenu.classList.toggle("open");
+    };
+    document.body.addEventListener("click", function (e) {
+      if (!coursesMenu.contains(e.target))
+        coursesMenu.classList.remove("open");
+    });
+
+    // Dynamic Profile Display
+    const user = {
+      initials: "L",
+      name: "Lokesh G",
+      member: "pro",
+    };
+    document.getElementById("profileInitials").textContent = user.initials;
+    document.getElementById("profileName").textContent = user.name;
+    const profileRole = document.getElementById("profileRole");
+    if (user.member === "pro") {
+      profileRole.textContent = "Pro Member";
+      profileRole.style.display = "block";
+    } else if (user.member === "premium") {
+      profileRole.textContent = "Premium Member";
+      profileRole.style.display = "block";
+    } else {
+      profileRole.style.display = "none";
+    }
+
+    // Profile Dropdown
+    const profileBtn = document.getElementById("profileAvatarBtn");
+    const profileWrap = document.getElementById("profileMenuWrap");
+    profileBtn.onclick = function (e) {
+      e.stopPropagation();
+      profileWrap.classList.toggle("open");
+      profileBtn.setAttribute(
+        "aria-expanded",
+        profileWrap.classList.contains("open")
+      );
+    };
+    document.body.addEventListener("click", function (e) {
+      if (!profileWrap.contains(e.target)) {
+        profileWrap.classList.remove("open");
+        profileBtn.setAttribute("aria-expanded", "false");
+      }
+    });
+
+    // --- MESSAGING FEATURE ---
+    const modalOverlay = document.getElementById("modalOverlay");
+    const messageModal = document.getElementById("messageModal");
+    const messageForm = document.getElementById("messageForm");
+    const modalTo = document.getElementById("modalTo");
+    const modalMsg = document.getElementById("modalMsg");
+    let currentToMember = "";
+    document.querySelectorAll(".btn-message").forEach((btn) => {
+      btn.addEventListener("click", function (e) {
+        e.stopPropagation();
+        let memberCard = e.currentTarget.closest(".member-card");
+        currentToMember =
+          memberCard.dataset.member ||
+          memberCard.querySelector(".member-name").textContent;
+        modalTo.textContent = currentToMember;
+        modalMsg.value = "";
+        modalOverlay.classList.add("active");
+        messageModal.classList.add("active");
+        modalMsg.focus();
+      });
+    });
+    // Close modal
+    function closeModal() {
+      modalOverlay.classList.remove("active");
+      messageModal.classList.remove("active");
+    }
+    modalOverlay.addEventListener("click", closeModal);
+    messageForm
+      .querySelector(".cancel-btn")
+      .addEventListener("click", function (e) {
+        e.preventDefault();
+        closeModal();
+      });
+    // Send - just simulate, with alert for UI demo
+    messageForm.addEventListener("submit", function (e) {
+      e.preventDefault();
+      alert(`Message sent to ${currentToMember}:\n\n${modalMsg.value}`);
+      closeModal();
+    });
+
+    // --- REPLY UNDER DISCUSSION FEATURE ---
+    document.querySelectorAll(".discussion-item").forEach(function (article) {
+      const btnReply = article.querySelector(".btn-reply");
+      btnReply.addEventListener("click", function (e) {
+        e.preventDefault();
+        // If already showing form, don't add again.
+        if (article.querySelector(".reply-form")) return;
+        // Create reply form
+        const replyForm = document.createElement("form");
+        replyForm.className = "reply-form";
+        replyForm.style.marginTop = "1em";
+        replyForm.innerHTML = `
+          <textarea style="width:100%;padding:0.7em 0.9em;background:var(--surface-card);color:var(--text-main);font-size:1em;border:1px solid var(--highlight);border-radius:7px;resize:vertical;" required placeholder="Write a reply..."></textarea>
+          <div style="margin-top:0.5em;display:flex;gap:0.55em;">
+            <button type="button" class="cancel-btn" style="flex:0 0 auto;background:var(--primary);color:#22223a;border-radius:8px;padding:0.43em 1.1em;font-weight:600;border:none;cursor:pointer;">Cancel</button>
+            <button type="submit" class="send-btn" style="flex:0 0 auto;background:var(--highlight);color:#fff;border-radius:8px;padding:0.43em 1.1em;font-weight:600;border:none;cursor:pointer;">Reply</button>
+          </div>
+        `;
+        btnReply.insertAdjacentElement("afterend", replyForm);
+        replyForm.querySelector("textarea").focus();
+        // Handle cancel
+        replyForm.querySelector(".cancel-btn").onclick = function (ev) {
+          replyForm.remove();
+        };
+        // Handle submit
+        replyForm.onsubmit = function (ev) {
+          ev.preventDefault();
+          let val = replyForm.querySelector("textarea").value.trim();
+          if (val.length === 0) return;
+          // Add reply to replies-list
+          const rlist = article.querySelector(".replies-list");
+          const replyDiv = document.createElement("div");
+          replyDiv.className = "reply";
+          replyDiv.innerHTML = `<div class="reply-meta">${user.name
+            } <span style="opacity:0.7;">(just now)</span></div>
+            <div class="reply-content">${escapeHTML(val)}</div>`;
+          rlist.appendChild(replyDiv);
+          replyForm.remove();
+        };
+      });
+    });
+
+    // Helper for escaping HTML in replies
+    function escapeHTML(str) {
+      return str.replace(/[&<>"']/g, function (c) {
+        return {
+          "&": "&amp;",
+          "<": "&lt;",
+          ">": "&gt;",
+          '"': "&quot;",
+          "'": "&#39;",
+        }[c];
+      });
+    }
+  </script>
+</body>
+
+</html>
