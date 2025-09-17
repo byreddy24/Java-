@@ -1,0 +1,1522 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Basic Meta Tags -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description"
+        content="SkillSpark - Interactive online courses for programming, design, business & more. Join thousands of successful students today!" />
+    <meta name="author" content="SkillSpark Team" />
+    <meta name="robots" content="index, follow" />
+
+    <!-- Open Graph for Social Sharing -->
+    <meta property="og:title" content="SkillSpark - Learn, Grow, Spark Your Potential" />
+    <meta property="og:description"
+        content="Join SkillSpark's interactive courses and master new skills with expert instructors. Flexible, engaging, and affordable learning for all." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://yoursite.com" />
+    <meta property="og:image" content="https://yoursite.com/og-image.jpg" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="SkillSpark - Learn, Grow, Spark Your Potential" />
+    <meta name="twitter:description"
+        content="Join SkillSpark's interactive courses and master new skills with expert instructors. Flexible, engaging, and affordable learning for all." />
+    <meta name="twitter:image" content="https://yoursite.com/twitter-image.jpg" />
+
+    <!-- Favicon -->
+    <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+
+    <meta charset="UTF-8" />
+    <title>SkillSpark - Learning for Your Future</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+    <style>
+        /* Base Reset & Styles */
+        body {
+            margin: 0;
+            font-family: "Inter", "Arial", sans-serif;
+            background: #181a23;
+            color: #ececf1;
+            line-height: 1.6;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: auto;
+            padding: 0 24px;
+        }
+
+        h1,
+        h2,
+        h3 {
+            margin-top: 0.8em;
+            margin-bottom: 0.4em;
+            font-weight: 600;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 60px 0 40px 0;
+            text-align: center;
+            background: linear-gradient(270deg, #23254a, #21222d, #2a2a4d);
+            background-size: 600% 600%;
+            animation: gradientShift 15s ease infinite;
+        }
+
+        @keyframes gradientShift {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        .hero h1,
+        .hero p,
+        .hero .cta-btn {
+            opacity: 0;
+            transform: translateY(60px);
+            transition: opacity 0.6s, transform 0.6s;
+            will-change: opacity, transform;
+        }
+
+        .hero.animate h1 {
+            opacity: 1;
+            transform: translateY(0);
+            transition-delay: 0.2s;
+        }
+
+        .hero.animate p {
+            opacity: 1;
+            transform: translateY(0);
+            transition-delay: 0.44s;
+        }
+
+        .hero.animate .cta-btn {
+            opacity: 1;
+            transform: translateY(0);
+            transition-delay: 0.75s;
+        }
+
+        .hero h1 {
+            font-size: clamp(1.8rem, 5vw, 2.8rem);
+            line-height: 1.2;
+            margin-bottom: 10px;
+            color: #ffe066;
+        }
+
+        .hero p {
+            font-size: 1.19rem;
+            color: #c0c3e6;
+            margin-bottom: 26px;
+        }
+
+        .hero .cta-btn {
+            background-color: #ffe066;
+            color: #222;
+            padding: 12px 24px;
+            border-radius: 22px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            border: none;
+            max-width: 230px;
+            display: inline-block;
+            transition: background-color 0.2s ease;
+        }
+
+        .hero .cta-btn:hover,
+        .hero .cta-btn:focus {
+            background-color: #ffd700;
+            outline: none;
+        }
+
+        /* Navigation */
+        header {
+            background: #23242f;
+            padding: 20px 0;
+        }
+
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 24px;
+            position: relative;
+        }
+
+        .nav-logo {
+            font-size: 2rem;
+            font-weight: 800;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-shrink: 1;
+            flex-grow: 1;
+            min-width: 0;
+            overflow: hidden;
+        }
+
+        .nav-logo img {
+            height: 40px;
+            width: auto;
+            max-width: 100%;
+        }
+
+        .nav-logo span {
+            margin-left: 12px;
+            color: #ffe066;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 50vw;
+            display: block;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 32px;
+            margin: 0;
+            padding: 0;
+            align-items: center;
+            flex-wrap: nowrap;
+        }
+
+        nav li {
+            font-size: 1.08rem;
+        }
+
+        nav a.cta-btn {
+            padding: 8px 18px;
+            background-color: #8267e5;
+            color: #fff;
+            border-radius: 22px;
+            font-weight: 700;
+            transition: background-color 0.2s ease;
+        }
+
+        nav a.cta-btn:hover,
+        nav a.cta-btn:focus {
+            background-color: #9c7ff6;
+            outline: none;
+        }
+
+        .nav-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: #ffe066;
+            font-size: 2rem;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+
+        .nav-toggle:focus,
+        nav a:focus,
+        .cta-btn:focus {
+            outline: 2px solid #ffe066;
+            outline-offset: 2px;
+        }
+
+        @media (max-width: 600px) {
+            .nav {
+                justify-content: flex-start;
+                padding: 0 8px;
+                min-height: 54px;
+            }
+
+            .nav-logo img {
+                height: 32px;
+                max-width: 30vw;
+                object-fit: contain;
+                display: block;
+            }
+
+            .nav-logo span {
+                font-size: 1.1rem;
+            }
+
+            .nav-toggle {
+                position: absolute;
+                top: 50%;
+                right: 8px;
+                transform: translateY(-50%);
+                display: block !important;
+                z-index: 1200;
+                font-size: 1.8rem;
+                padding: 7px 8px;
+                background: transparent;
+                border: none;
+                color: #ffe066;
+                cursor: pointer;
+            }
+
+            nav ul {
+                flex-direction: column;
+                display: none;
+                background: #23254a;
+                position: absolute;
+                top: 100%;
+                right: 0;
+                width: 100%;
+                min-width: 210px;
+                z-index: 1100;
+                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.13);
+                padding: 12px 0 18px 0;
+                border-radius: 0 0 10px 10px;
+                align-items: center;
+            }
+
+            nav ul.open {
+                display: flex;
+            }
+
+            nav li {
+                width: 100%;
+                font-size: 1.1rem;
+                text-align: center;
+                padding: 10px 0;
+                border-bottom: 1px solid #2d2d55;
+                margin: 0;
+            }
+
+            nav li:last-child {
+                border-bottom: none;
+            }
+        }
+
+        /* Scroll reveal */
+        .fade-slide-up {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.7s cubic-bezier(.31, .97, .45, 1), transform 0.7s cubic-bezier(.31, .97, .45, 1);
+            will-change: opacity, transform;
+        }
+
+        .fade-slide-up.in-view {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+
+            .fade-slide-up,
+            .fade-slide-up.in-view,
+            .hero h1,
+            .hero p,
+            .hero .cta-btn,
+            .hero.animate h1,
+            .hero.animate p,
+            .hero.animate .cta-btn {
+                opacity: 1 !important;
+                transform: none !important;
+                transition: none !important;
+                animation: none !important;
+            }
+        }
+
+        /* Features */
+        .features {
+            background: #181a23;
+            padding: 40px 0;
+        }
+
+        .features-container {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 24px;
+            max-width: 1100px;
+            margin: auto;
+        }
+
+        .feature-block {
+            background: #22243a;
+            border-radius: 16px;
+            padding: 22px 24px;
+            flex: 1 1 240px;
+            min-width: 220px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.09);
+            transition: transform 0.12s ease;
+            cursor: default;
+            user-select: none;
+        }
+
+        .feature-block:hover {
+            transform: translateY(-5px) scale(1.03);
+        }
+
+        .feature-icon {
+            font-size: 2.4rem;
+            margin-bottom: 12px;
+            color: #ffe066;
+            display: block;
+        }
+
+        /* Courses */
+        #courses {
+            text-align: center;
+            padding: 30px 0 40px;
+        }
+
+        .course-filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 20px;
+            margin-bottom: 26px;
+            justify-content: center;
+        }
+
+        .course-filters .filter {
+            padding: 8px 18px;
+            border: 2px solid #ffe066;
+            background: #22232c;
+            color: #fffbea;
+            border-radius: 7px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            outline: none;
+            transition: background 0.16s, border 0.16s, color 0.16s, box-shadow 0.2s;
+            letter-spacing: 0.1px;
+            user-select: none;
+            white-space: nowrap;
+        }
+
+        .course-filters .filter.active,
+        .course-filters .filter:focus,
+        .course-filters .filter:hover {
+            background: #ffe066;
+            color: #181a23;
+            border-color: #ffe066;
+            box-shadow: 0 2px 14px 0 rgba(255, 224, 102, 0.10);
+        }
+
+        #courseSearch {
+            padding: 7px 14px;
+            border-radius: 7px;
+            border: none;
+            margin-bottom: 14px;
+            width: 230px;
+            background: #22223a;
+            color: #ececf1;
+            font-size: 1rem;
+        }
+
+        .courses-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 28px;
+            justify-content: center;
+            margin: 24px 0;
+            transition: max-height 0.3s ease;
+        }
+
+        .course-card {
+            background: #23243f;
+            border-radius: 15px;
+            padding: 22px 18px;
+            width: 200px;
+            box-shadow: 0 2px 14px rgba(0, 0, 0, 0.13);
+            transition: transform 0.14s ease, box-shadow 0.14s ease;
+            cursor: pointer;
+            user-select: none;
+            color: #ececf1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .course-card img {
+            width: 38px;
+            height: 38px;
+            margin-bottom: 12px;
+            object-fit: contain;
+        }
+
+        .course-card:hover,
+        .course-card:focus-within {
+            transform: translateY(-6px) scale(1.03);
+            box-shadow: 0 4px 24px #8267e530;
+            outline: none;
+        }
+
+        .course-title {
+            font-size: 1.12rem;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .course-instructor {
+            font-size: 0.96rem;
+            color: #ffe066;
+            margin-bottom: 8px;
+        }
+
+        .course-rating {
+            color: #81edb8;
+            font-size: 0.96rem;
+        }
+
+        .browse-all-btn {
+            background: #8267e5;
+            color: #fff;
+            padding: 12px 38px;
+            border-radius: 21px;
+            font-weight: 700;
+            margin: 22px auto 0;
+            cursor: pointer;
+            border: none;
+            display: block;
+            max-width: 250px;
+            transition: background-color 0.25s ease;
+        }
+
+        .browse-all-btn:hover,
+        .browse-all-btn:focus {
+            background: #9c7ff6;
+            outline: none;
+        }
+
+        /* No results */
+        .no-results {
+            background: #23242f;
+            border-radius: 10px;
+            padding: 34px 24px;
+            margin-top: 18px;
+            color: #ffe066;
+            font-size: 1.15rem;
+            text-align: left;
+            min-height: 140px;
+        }
+
+        .no-results p {
+            font-weight: 500;
+            margin-bottom: 0.8em;
+        }
+
+        .no-results h4 {
+            margin: 0 0 12px 0;
+            font-weight: 600;
+        }
+
+        .recommended-courses {
+            display: flex;
+            gap: 18px;
+            flex-wrap: wrap;
+            padding-top: 7px;
+        }
+
+        /* Testimonials */
+        .testimonials-section {
+            background: #20202d;
+            padding: 44px 0;
+            text-align: center;
+            position: relative;
+        }
+
+        .testimonials-horizontal {
+            display: flex;
+            gap: 28px;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            padding: 8px 0;
+            max-width: 950px;
+            margin: 32px auto 0;
+            scrollbar-width: thin;
+            scrollbar-color: #7264c6 #201e33;
+        }
+
+        .testimonials-horizontal::-webkit-scrollbar {
+            height: 8px;
+        }
+
+        .testimonials-horizontal::-webkit-scrollbar-thumb {
+            background: #7264c6;
+            border-radius: 5px;
+        }
+
+        .testimonials-horizontal::-webkit-scrollbar-track {
+            background: rgba(40, 38, 60, 0.1);
+        }
+
+        .testimonial-card {
+            background: #222236;
+            border-radius: 14px;
+            padding: 24px 26px;
+            min-width: 330px;
+            max-width: 360px;
+            font-size: clamp(0.85rem, 2vw, 1rem);
+            box-shadow: 0 4px 18px #8267e52a;
+            flex: 0 0 auto;
+            scroll-snap-align: start;
+            transition: box-shadow 0.2s ease;
+            color: #ececf1;
+        }
+
+        .testimonial-card:hover,
+        .testimonial-card:focus-within {
+            box-shadow: 0 6px 30px #ffe06644;
+            outline: none;
+        }
+
+        .testimonial-user {
+            margin-top: 14px;
+            font-weight: 700;
+            color: #ffe066;
+        }
+
+        /* Partners */
+        .partners-section {
+            text-align: center;
+            padding: 34px 0 26px 0;
+        }
+
+        .partners-scroll-horizontal {
+            overflow: hidden;
+            width: 100%;
+            white-space: nowrap;
+        }
+
+        .partners-track {
+            display: flex;
+            will-change: transform;
+            transition: none;
+        }
+
+        .partner-logo {
+            padding: 0 18px;
+            flex: 0 0 auto;
+            display: flex;
+            align-items: center;
+        }
+
+        .partner-logo img {
+            height: 60px;
+            max-height: none;
+            object-fit: contain;
+            background: white;
+            border-radius: 12px;
+            transition: transform 0.2s ease;
+            display: block;
+            padding: 0;
+            user-select: none;
+        }
+
+        .partner-logo img:hover,
+        .partner-logo img:focus {
+            transform: scale(1.1);
+            outline: none;
+        }
+
+        /* Instructors */
+        .instructors-section {
+            padding: 36px 0;
+            text-align: center;
+        }
+
+        .instructors-list {
+            display: flex;
+            gap: 34px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 22px 0;
+        }
+
+        .instructor-card {
+            background: #24244a;
+            border-radius: 13px;
+            padding: 18px 14px;
+            width: 155px;
+            cursor: default;
+            user-select: none;
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
+        }
+
+        .instructor-card:hover,
+        .instructor-card:focus-within {
+            transform: translateY(-4px);
+            box-shadow: 0 4px 16px rgba(130, 103, 229, 0.2);
+            outline: none;
+        }
+
+        .instructor-card img {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            margin-bottom: 7px;
+            object-fit: cover;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .instructor-name {
+            font-size: 1.06rem;
+            font-weight: 600;
+            color: #ececf1;
+            text-align: center;
+        }
+
+        .instructor-role {
+            font-size: 0.92rem;
+            color: #ffe066;
+            text-align: center;
+        }
+
+        /* FAQ */
+        .faq-section {
+            padding: 40px 0;
+            background: #181a23;
+        }
+
+        .faq-list {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            background: #22223a;
+            border-radius: 13px;
+            margin-bottom: 14px;
+            padding: 13px 18px;
+            cursor: pointer;
+            transition: background 0.14s ease;
+            outline: none;
+        }
+
+        .faq-item.open {
+            background: #2a2a4d;
+        }
+
+        .faq-question {
+            font-weight: 600;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            padding-right: 20px;
+            user-select: none;
+        }
+
+        .faq-question::after {
+            content: '+';
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            font-weight: bold;
+            font-size: 1.2rem;
+            color: #ffe066;
+            transition: transform 0.3s ease;
+        }
+
+        .faq-question.open::after {
+            content: '-';
+            transform: translateY(-50%);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            font-size: 0.97rem;
+            color: #d3d7f3;
+            user-select: text;
+        }
+
+        .faq-item.open .faq-answer {
+            max-height: 120px;
+            margin-top: 8px;
+        }
+
+        /* Footer */
+        footer {
+            margin-top: 36px;
+            background: #141422;
+            color: #b5b7c8;
+            text-align: center;
+            padding: 20px 0 8px;
+            font-size: 0.92rem;
+            user-select: none;
+        }
+
+        .footer-links {
+            margin: 11px 0;
+        }
+
+        .footer-links a {
+            margin: 0 12px;
+            color: #ffe066;
+            font-weight: 500;
+        }
+
+        /* Back to Top button */
+        #backToTopBtn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            display: none;
+            background-color: #8267e5;
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            width: 44px;
+            height: 44px;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(130, 103, 229, 0.6);
+            z-index: 1500 !important;
+            transition: opacity 0.3s ease;
+            user-select: none;
+        }
+
+        #backToTopBtn:hover,
+        #backToTopBtn:focus {
+            background-color: #9c7ff6;
+            outline: none;
+        }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+
+            .features-container,
+            .instructors-list {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .feature-block,
+            .instructor-card {
+                width: 90vw;
+                max-width: 340px;
+                box-sizing: border-box;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .course-filters {
+                gap: 6px;
+                font-size: 0.99rem;
+            }
+
+            body {
+                overflow-x: hidden !important;
+            }
+
+            .course-card {
+                width: 94vw;
+                max-width: 350px;
+                margin: 0 auto 12px;
+                padding: 12px 2vw;
+                box-sizing: border-box;
+                position: relative;
+                left: -2px;
+            }
+
+            .courses-list {
+                flex-direction: column !important;
+                align-items: center !important;
+                padding-bottom: 80px !important;
+            }
+
+            .recommended-courses {
+                flex-direction: column !important;
+                align-items: center !important;
+                gap: 14px !important;
+            }
+
+            #backToTopBtn {
+                right: 10px !important;
+                bottom: 10px !important;
+                width: 38px !important;
+                height: 38px !important;
+                font-size: 18px !important;
+                z-index: 9999 !important;
+            }
+        }
+
+        .promo-banner {
+            box-sizing: border-box;
+            max-width: 100vw;
+            overflow: hidden;
+            background: #5a2fc2;
+            color: #fff;
+            font-weight: bold;
+            padding: 10px 20px;
+            width: 100%;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .countdown-timer {
+            font-family: monospace;
+            font-size: 1.1rem;
+            min-width: 120px;
+            text-align: center;
+        }
+
+        #promo-close-btn {
+            background: transparent;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        body.promo-active {
+            padding-top: 50px;
+            /* Adjust based on banner height to prevent content jump */
+        }
+
+        @media (max-width: 400px) {
+            .promo-banner {
+                font-size: 0.86rem;
+                gap: 2px;
+            }
+        }
+
+        @media (max-width: 600px) {
+
+            .container,
+            .courses-list {
+                padding-left: 12px !important;
+                padding-right: 12px !important;
+                box-sizing: border-box;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="promo-banner" class="promo-banner">
+        <p>Next cohort begins <span id="countdown-date">August 15th</span>! Enroll now for <strong>20% off!</strong>
+        </p>
+        <div id="countdown-timer" class="countdown-timer"></div>
+        <button id="promo-close-btn" aria-label="Close promotional banner">&times;</button>
+    </div>
+    <!-- Header / Navigation -->
+    <header>
+        <div class="nav" role="navigation" aria-label="Primary Navigation">
+            <div class="nav-logo">
+                <img src="/assets/images/logo.png" height="48" alt="SkillSpark Logo" loading="lazy" />
+                <span>SkillSpark</span>
+            </div>
+
+            <button class="nav-toggle" aria-label="Open navigation menu" aria-expanded="false"
+                aria-controls="primaryNav">
+                <i class="fas fa-bars" aria-hidden="true"></i>
+            </button>
+
+            <nav id="primaryNav" aria-live="polite">
+                <ul>
+                    <li><a href="/index.html">Home</a></li>
+                    <li><a href="#courses">Courses</a></li>
+                    <li><a href="#instructors">Instructors</a></li>
+                    <li><a href="#faq">FAQ</a></li>
+                    <li><a href="/login-signup.html" class="cta-btn">Login/Signup</a></li>
+                </ul>
+            </nav>
+        </div>
+
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" role="banner">
+        <div class="container">
+            <h1>
+                Elevate Your <span style="color: #8267e5">Career</span> with
+                <span style="color: #8267e5">Future-Ready</span> Skills
+            </h1>
+            <p>
+                Unlock your potential and shape your future with
+                <span style="color: #8267e5">
+                    state-of-the-art online learning designed for ambitious professionals.</span>
+                Our e-learning platform offers you a gateway to personal growth and career transformation, whatever your
+                starting
+                point.
+            </p>
+            <a href="/pages/login-signup.html" class="cta-btn">Get Started for Free</a>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features fade-slide-up" aria-label="Platform Features">
+        <div class="features-container container">
+            <div class="feature-block">
+                <span class="feature-icon">🎓</span>
+                <h3>Certified &amp; Recognized</h3>
+                <p>Earn Professional Certificates<br />Boost your resume with credentials that matter in the real
+                    world.</p>
+            </div>
+            <div class="feature-block">
+                <span class="feature-icon">💼</span>
+                <h3>Project-Based Learning</h3>
+                <p>Build Real-World Skills<br />Work on live assignments that mirror actual industry problems.</p>
+            </div>
+            <div class="feature-block">
+                <span class="feature-icon">📱</span>
+                <h3>Learn On Your Terms</h3>
+                <p>Anytime. Anywhere. Any Device.<br />Streamline your learning across mobile or desktop, whenever you
+                    want.
+                </p>
+            </div>
+            <div class="feature-block">
+                <span class="feature-icon">🧑‍🤝‍🧑</span>
+                <h3>Thriving Learning Community</h3>
+                <p>Collaborate. Discuss. Grow.<br />Engage with peers and mentors for support and deeper insights.</p>
+            </div>
+            <div class="feature-block">
+                <span class="feature-icon">🔍</span>
+                <h3>Career Acceleration</h3>
+                <p>Guided Path to Your Dream Job<br />Get one-on-one career support, resume help, and job placement
+                    tips.</p>
+            </div>
+            <div class="feature-block">
+                <span class="feature-icon">💡</span>
+                <h3>Learn from the Legends</h3>
+                <p>Top Instructors. Real Experience.<br />Train under seasoned professionals and domain experts.</p>
+            </div>
+            <div class="feature-block">
+                <span class="feature-icon">💰</span>
+                <h3>Smart Learning Investment</h3>
+                <p>Premium Courses. Honest Pricing.<br />Get elite-level education without breaking the bank.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Courses Section -->
+    <section id="courses" class="courses fade-slide-up container" aria-label="Career Courses Section"
+        style="padding-bottom: 40px;">
+        <h2>Browse Top Essential Career Courses</h2>
+        <input type="text" id="courseSearch" placeholder="Search courses..." autocomplete="off"
+            aria-label="Search courses" />
+
+        <div class="course-filters" role="list" aria-label="Course categories">
+            <button data-category="all" class="filter active" type="button" role="listitem"
+                aria-pressed="true">All</button>
+            <button data-category="programming" class="filter" type="button" role="listitem"
+                aria-pressed="false">Programming</button>
+            <button data-category="web development" class="filter" type="button" role="listitem"
+                aria-pressed="false">Web Development</button>
+            <button data-category="design" class="filter" type="button" role="listitem"
+                aria-pressed="false">Design</button>
+            <button data-category="marketing" class="filter" type="button" role="listitem"
+                aria-pressed="false">Marketing</button>
+            <button data-category="business" class="filter" type="button" role="listitem"
+                aria-pressed="false">Business</button>
+            <button data-category="cybersecurity" class="filter" type="button" role="listitem"
+                aria-pressed="false">Cybersecurity</button>
+            <button data-category="app development" class="filter" type="button" role="listitem"
+                aria-pressed="false">App Development</button>
+            <button data-category="e-commerce" class="filter" type="button" role="listitem"
+                aria-pressed="false">E-Commerce</button>
+            <button data-category="machine learning" class="filter" type="button" role="listitem"
+                aria-pressed="false">Machine Learning</button>
+            <button data-category="cloud computing" class="filter" type="button" role="listitem"
+                aria-pressed="false">Cloud Computing</button>
+            <button data-category="ui-ux" class="filter" type="button" role="listitem"
+                aria-pressed="false">UI/UX</button>
+            <button data-category="data science" class="filter" type="button" role="listitem" aria-pressed="false">Data
+                Science</button>
+            <button data-category="blockchain" class="filter" type="button" role="listitem"
+                aria-pressed="false">Blockchain</button>
+            <button data-category="artificial intelligence" class="filter" type="button" role="listitem"
+                aria-pressed="false">Artificial Intelligence</button>
+            <button data-category="career development" class="filter" type="button" role="listitem"
+                aria-pressed="false">Career Development</button>
+            <button data-category="finance" class="filter" type="button" role="listitem"
+                aria-pressed="false">Finance</button>
+        </div>
+
+        <div class="courses-list" id="coursesList" aria-live="polite" aria-atomic="true"></div>
+        <button id="toggleCoursesBtn" class="browse-all-btn" type="button" aria-expanded="false">Show More</button>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials-section fade-slide-up" aria-label="Learner Testimonials">
+        <h2>What Our Learners Say</h2>
+        <div class="testimonials-horizontal" id="testimonialsList" tabindex="0" aria-live="polite"></div>
+    </section>
+
+    <!-- Partners Section -->
+    <section class="partners-section" aria-label="Our expert trainers and partners">
+        <h2><strong>Our Expert Trainers</strong> are From</h2>
+        <div class="partners-scroll-horizontal" aria-hidden="true">
+            <div id="partnersList" class="partners-track"></div>
+        </div>
+    </section>
+
+    <!-- Instructors Section -->
+    <section id="instructors" class="instructors-section fade-slide-up" aria-label="Meet Our Instructors">
+        <h2>Meet Our Instructors</h2>
+        <div class="instructors-list" id="instructorsList"></div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq" class="faq-section fade-slide-up" aria-label="Frequently Asked Questions">
+        <div class="container">
+            <h2>Frequently Asked Questions</h2>
+            <div class="faq-list" role="list">
+                <!-- Example FAQs will be rendered by JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div><b>SkillSpark</b> &copy; 2025 All Rights Reserved | Empowering Lifelong Learners</div>
+        <div class="footer-links">
+            <a href="/pages/privacy-policy.html">Privacy Policy</a>
+            <a href="/pages/terms-conditions.html">Terms &amp; Conditions</a>
+            <a href="/pages/contact.html">Contact</a>
+            <a href="#" aria-label="Instagram"><i class="fab fa-instagram" style="color:#ffe066;"></i></a>
+            <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin" style="color:#ffe066;"></i></a>
+        </div>
+        <div style="margin-top: 8px">Your privacy and security are protected.</div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button id="backToTopBtn" title="Go to top" aria-label="Back to top" type="button"><i
+            class="fas fa-arrow-up"></i></button>
+
+    <!-- Scripts -->
+    <script>
+        // Navigation Toggle
+        const navToggle = document.querySelector('.nav-toggle');
+        const navList = document.querySelector('nav ul');
+
+        navToggle.addEventListener('click', () => {
+            const expanded = navToggle.getAttribute('aria-expanded') === 'true';
+            navToggle.setAttribute('aria-expanded', !expanded);
+            navList.classList.toggle('open');
+        });
+
+        document.querySelectorAll('nav ul li a').forEach(link => {
+            link.addEventListener('click', () => {
+                navList.classList.remove('open');
+                navToggle.setAttribute('aria-expanded', false);
+            });
+        });
+
+        document.addEventListener('click', e => {
+            if (!navList.contains(e.target) && !navToggle.contains(e.target)) {
+                navList.classList.remove('open');
+                navToggle.setAttribute('aria-expanded', false);
+            }
+        });
+
+        // Back to Top Button Logic
+        const backToTopBtn = document.getElementById("backToTopBtn");
+        window.addEventListener("scroll", () => {
+            if (window.scrollY > 100) {
+                backToTopBtn.style.display = "block";
+            } else {
+                backToTopBtn.style.display = "none";
+            }
+        });
+
+        backToTopBtn.addEventListener("click", () => {
+            window.scrollTo({ top: 0, behavior: "smooth" });
+        });
+
+        // FAQ questions data
+        const faqData = [
+            { question: "Are SkillSpark certificates recognized?", answer: "Yes, all our certificates are recognized by top industry partners and can be added to your LinkedIn or CV." },
+            { question: "Can I access courses on mobile?", answer: "Absolutely! All courses are fully mobile responsive and can be accessed anywhere." },
+            { question: "Is there a refund policy?", answer: "Yes, we offer a 7-day refund policy if you're not satisfied with any course." },
+            { question: "How do I get instructor support?", answer: "You can post questions in the course forum or message your instructor directly through our community portal." }
+        ];
+
+        // Render FAQ items
+        const faqList = document.querySelector('.faq-list');
+        faqData.forEach(({ question, answer }) => {
+            const faqItem = document.createElement('div');
+            faqItem.className = 'faq-item';
+            faqItem.setAttribute('role', 'listitem');
+
+            const q = document.createElement('div');
+            q.className = 'faq-question';
+            q.setAttribute('role', 'button');
+            q.setAttribute('aria-expanded', 'false');
+            q.tabIndex = 0;
+            q.textContent = question;
+
+            const a = document.createElement('div');
+            a.className = 'faq-answer';
+            a.innerHTML = `<p>${answer}</p>`;
+
+            faqItem.appendChild(q);
+            faqItem.appendChild(a);
+            faqList.appendChild(faqItem);
+
+            // Toggle function
+            const toggleFAQ = () => {
+                const expanded = q.getAttribute('aria-expanded') === 'true';
+                q.setAttribute('aria-expanded', !expanded);
+                q.classList.toggle('open');
+                faqItem.classList.toggle('open');
+                a.style.maxHeight = expanded ? null : a.scrollHeight + 'px';
+            };
+
+            q.addEventListener('click', toggleFAQ);
+            q.addEventListener('keydown', e => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    toggleFAQ();
+                }
+            });
+        });
+
+        // Course data
+        const coursesData = [
+            { img: "https://img.icons8.com/color/48/000000/java-coffee-cup-logo--v2.png", title: "Java Programming", instructor: "by Sana Mathur", rating: "★ 4.6 | 1800+ students", link: "/pages/courses/java-programming.html", category: "programming" },
+            { img: "https://img.icons8.com/color/48/000000/python--v2.png", title: "Python Programming", instructor: "by Amit Sinha", rating: "★ 4.8 | 2200+ students", link: "/pages/courses/python-programming.html", category: "programming" },
+            { img: "https://img.icons8.com/color/48/000000/html-5--v1.png", title: "Web Development", instructor: "by Ria Kapoor", rating: "★ 4.7 | 1600+ students", link: "/pages/courses/web-development.html", category: "web development" },
+            { img: "https://img.icons8.com/color/48/000000/video-editing.png", title: "Video Editing", instructor: "by Jay Gupta", rating: "★ 4.5 | 1400+ students", link: "/pages/courses/video-editing.html", category: "design" },
+            { img: "https://img.icons8.com/3d-fluency/94/web-advertising.png", title: "Digital Marketing", instructor: "by Karan Singh", rating: "★ 4.5 | 1500+ students", link: "/pages/courses/digital-marketing.html", category: "marketing" },
+            { img: "https://img.icons8.com/color/48/000000/statistics.png", title: "Data Analytics", instructor: "by Ananya Rao", rating: "★ 4.7 | 2100+ students", link: "/pages/courses/data-analytics.html", category: "business" },
+            { img: "https://img.icons8.com/color/48/000000/cyber-security.png", title: "Cyber Security", instructor: "by Anjali Singh", rating: "★ 4.7 | 1700+ students", link: "/pages/courses/cyber-security.html", category: "cybersecurity" },
+            { img: "https://img.icons8.com/color/48/000000/android-os.png", title: "Mobile App Development", instructor: "by Mohit Kumar", rating: "★ 4.6 | 1800+ students", link: "/pages/courses/mobile-app-development.html", category: "app development" },
+            { img: "https://img.icons8.com/color/48/000000/shopping-cart-loaded.png", title: "E-Commerce", instructor: "by Sneha Kapoor", rating: "★ 4.5 | 1200+ students", link: "/pages/courses/e-commerce.html", category: "e-commerce" },
+            { img: "https://img.icons8.com/color-glass/48/machine-learning.png", title: "Machine Learning", instructor: "by Neha Agarwal", rating: "★ 4.9 | 2300+ students", link: "/pages/courses/machine-learning.html", category: "machine learning" },
+            { img: "https://img.icons8.com/stickers/50/cloud-computing.png", title: "Cloud Computing", instructor: "by Vikram Patel", rating: "★ 4.6 | 1900+ students", link: "/pages/courses/cloud-computing.html", category: "cloud computing" },
+            { img: "https://img.icons8.com/color/50/web-design.png", title: "UI/UX Design", instructor: "by Priya Sharma", rating: "★ 4.9 | 2000+ students", link: "/pages/courses/ui-ux-design.html", category: "ui-ux" }
+        ];
+
+        const coursesContainer = document.getElementById("coursesList");
+        const toggleBtn = document.getElementById("toggleCoursesBtn");
+        const searchInput = document.getElementById("courseSearch");
+        let expanded = false;
+        let currentCategory = "all";
+
+        function getNumericRating(ratingStr) {
+            const match = ratingStr.match(/([0-9.]+)/);
+            return match ? parseFloat(match[1]) : 0;
+        }
+
+        function renderCourseCardHTML(course) {
+            return `
+        <div class="course-card" tabindex="0">
+          <a href="${course.link || "#"}" style="color: inherit; text-decoration: none; display: block;" aria-label="${course.title} course by ${course.instructor.replace('by ', '')}">
+            <img src="${course.img}" alt="${course.title} Logo" loading="lazy" />
+            <div class="course-title">${course.title}</div>
+            <div class="course-instructor">${course.instructor}</div>
+            <div class="course-rating">${course.rating}</div>
+          </a>
+        </div>
+      `;
+        }
+
+        function renderCourseCards(list) {
+            coursesContainer.innerHTML = list.map(renderCourseCardHTML).join('');
+        }
+
+        function recommendCourses() {
+            let recs = coursesData
+                .filter(course =>
+                    currentCategory === 'all' || (course.category && course.category.toLowerCase() === currentCategory.toLowerCase()))
+                .sort((a, b) => getNumericRating(b.rating) - getNumericRating(a.rating))
+                .slice(0, 3);
+
+            if (recs.length === 0) {
+                recs = coursesData.sort((a, b) => getNumericRating(b.rating) - getNumericRating(a.rating)).slice(0, 3);
+            }
+            return recs;
+        }
+
+        function showNoResults() {
+            const recommendations = recommendCourses();
+            coursesContainer.innerHTML = `
+        <div class="no-results" role="alert" aria-live="assertive" aria-atomic="true">
+          <p>No results found.</p>
+          <h4>Recommended Courses:</h4>
+          <div class="recommended-courses">
+              ${recommendations.map(renderCourseCardHTML).join('')}
+          </div>
+        </div>
+      `;
+        }
+
+        function renderCourses() {
+            const searchTerm = searchInput.value.trim().toLowerCase();
+            let filteredCourses = coursesData.filter(course =>
+                (currentCategory === "all" || (course.category && course.category.toLowerCase() === currentCategory.toLowerCase()))
+                && (
+                    course.title.toLowerCase().includes(searchTerm) ||
+                    course.instructor.toLowerCase().includes(searchTerm)
+                ));
+
+            if (!searchTerm && !expanded) {
+                filteredCourses = filteredCourses.slice(0, 4);
+                toggleBtn.style.display = filteredCourses.length < coursesData.length ? '' : 'none';
+                toggleBtn.setAttribute('aria-expanded', 'false');
+            } else if (!searchTerm) {
+                toggleBtn.style.display = '';
+            } else {
+                toggleBtn.style.display = 'none';
+            }
+
+            if (filteredCourses.length === 0) {
+                showNoResults();
+            } else {
+                renderCourseCards(filteredCourses);
+            }
+        }
+
+        toggleBtn.addEventListener('click', () => {
+            expanded = !expanded;
+            toggleBtn.textContent = expanded ? "Show Less" : "Show More";
+            toggleBtn.setAttribute('aria-expanded', expanded.toString());
+            renderCourses();
+            if (!expanded) coursesContainer.scrollIntoView({ behavior: "smooth" });
+        });
+
+        document.querySelectorAll('.filter').forEach(btn => {
+            btn.addEventListener('click', function () {
+                document.querySelectorAll('.filter').forEach(b => {
+                    b.classList.remove('active');
+                    b.setAttribute('aria-pressed', 'false');
+                });
+                this.classList.add('active');
+                this.setAttribute('aria-pressed', 'true');
+                currentCategory = this.getAttribute('data-category');
+                expanded = false;
+                toggleBtn.textContent = "Show More";
+                toggleBtn.setAttribute('aria-expanded', 'false');
+                renderCourses();
+            });
+        });
+
+        searchInput.addEventListener("input", renderCourses);
+
+        // Initial render
+        renderCourses();
+
+        // Testimonials Data & Render
+        const testimonials = [
+            { text: "SkillSpark helped me land my first job in tech. The UI/UX course was fantastic!", user: "Priya Sharma" },
+            { text: "Great instructors, flexible learning, and useful certificates. Highly recommend.", user: "Rohit Mehra" },
+            { text: "Loved the hands-on projects! It made complex topics simple and fun.", user: "Emily Wu" },
+            { text: "The Python course was a game-changer for my career. I feel confident tackling real-world problems now.", user: "Amit Sinha" },
+            { text: "SkillSpark's community support is amazing. I got help whenever I needed it.", user: "Sana Mathur" },
+            { text: "The courses are well-structured and the instructors are very knowledgeable.", user: "Jay Gupta" },
+            { text: "I appreciate the career guidance and job placement tips. It really helped me.", user: "Ananya Rao" },
+            { text: "The video editing course was top-notch! I learned so much in just a few weeks.", user: "Ria Kapoor" },
+            { text: "SkillSpark is my go-to platform for learning new skills. Highly recommend!", user: "Karan Singh" },
+            { text: "The course content is always up-to-date with industry standards. Love it!", user: "Neha Agarwal" },
+        ];
+
+        function renderTestimonials() {
+            const wrap = document.getElementById("testimonialsList");
+            wrap.innerHTML = "";
+            testimonials.forEach((t) => {
+                wrap.innerHTML += `
+          <div class="testimonial-card" tabindex="0" role="article" aria-label="Testimonial by ${t.user}">
+            "${t.text}"
+            <div class="testimonial-user">— ${t.user}</div>
+          </div>
+        `;
+            });
+        }
+
+        renderTestimonials();
+
+        (function autoScrollTestimonials() {
+            const el = document.getElementById("testimonialsList");
+            setInterval(() => {
+                if (el.scrollLeft + el.offsetWidth < el.scrollWidth) {
+                    el.scrollBy({ left: 340, behavior: "smooth" });
+                } else {
+                    el.scrollTo({ left: 0, behavior: "smooth" });
+                }
+            }, 3000);
+        })();
+
+        // Partners data & render
+        const partners = [
+            { logo: "/assets/images/airbus-logo.png", name: "Airbus" },
+            { logo: "/assets/images/ey-logo.png", name: "EY" },
+            { logo: "/assets/images/harman-logo.png", name: "Harman" },
+            { logo: "/assets/images/walmart-logo.png", name: "Walmart" },
+            { logo: "/assets/images/tcs-logo.png", name: "TCS" },
+            { logo: "/assets/images/flipkart-logo.png", name: "Flipkart" },
+            { logo: "/assets/images/accenture-logo.png", name: "Accenture" },
+            { logo: "/assets/images/microsoft-logo.png", name: "Microsoft" },
+            { logo: "/assets/images/adobe-logo.png", name: "Adobe" },
+            { logo: "/assets/images/google-logo.png", name: "Google" },
+            { logo: "/assets/images/amazon-logo.png", name: "Amazon" },
+            { logo: "/assets/images/facebook-logo.png", name: "Facebook" },
+            { logo: "/assets/images/apple-logo.png", name: "Apple" },
+            { logo: "/assets/images/ibm-logo.png", name: "IBM" },
+            { logo: "/assets/images/samsung-logo.png", name: "Samsung" }
+        ];
+
+        function renderPartners() {
+            const wrap = document.getElementById("partnersList");
+            const logos = partners.map(
+                p => `<div class="partner-logo"><img src="${p.logo}" alt="${p.name}" title="${p.name}" loading="lazy"></div>`
+            ).join("");
+            // Duplicate partner logos for seamless scroll
+            wrap.innerHTML = logos + logos;
+        }
+
+        renderPartners();
+
+        (function animatePartners() {
+            const partnersTrack = document.getElementById('partnersList');
+            let scrollX = 0;
+            const speed = 1.1; // pixels per frame approx
+            let oneSetWidth = 0;
+            let rafId;
+
+            function updateWidth() {
+                oneSetWidth = partnersTrack.scrollWidth / 2;
+            }
+
+            function animate() {
+                scrollX += speed;
+                if (scrollX >= oneSetWidth) scrollX = 0;
+                partnersTrack.style.transform = `translateX(${-scrollX}px)`;
+                rafId = requestAnimationFrame(animate);
+            }
+
+            function stopAnim() {
+                if (rafId) cancelAnimationFrame(rafId);
+            }
+
+            function startAnim() {
+                stopAnim();
+                updateWidth();
+                animate();
+            }
+
+            window.addEventListener('resize', startAnim);
+            window.addEventListener('load', startAnim);
+            if (document.fonts) {
+                document.fonts.ready.then(startAnim);
+            }
+            setTimeout(startAnim, 250);
+        })();
+
+        // Instructors data & render
+        const instructors = [
+            { img: "https://randomuser.me/api/portraits/women/44.jpg", name: "Sana Mathur", role: "Senior Java Instructor" },
+            { img: "https://randomuser.me/api/portraits/men/45.jpg", name: "Amit Sinha", role: "Python Specialist" },
+            { img: "https://randomuser.me/api/portraits/women/41.jpg", name: "Ria Kapoor", role: "Web Developer" },
+            { img: "https://randomuser.me/api/portraits/men/38.jpg", name: "Jay Gupta", role: "Video Editing Expert" }
+        ];
+
+        function renderInstructors() {
+            const wrap = document.getElementById("instructorsList");
+            wrap.innerHTML = "";
+            instructors.forEach(ins => {
+                wrap.innerHTML += `
+          <div class="instructor-card" tabindex="0" role="article" aria-label="Instructor ${ins.name}">
+            <img src="${ins.img}" alt="${ins.name}" loading="lazy" />
+            <div class="instructor-name">${ins.name}</div>
+            <div class="instructor-role">${ins.role}</div>
+          </div>`;
+            });
+        }
+
+        renderInstructors();
+
+        // Scroll reveal animation and hero animate on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            // Animate Hero
+            const hero = document.querySelector('.hero');
+            if (hero) setTimeout(() => hero.classList.add('animate'), 300);
+
+            // Intersection Observer for fade-slide-up
+            const fadeUps = document.querySelectorAll('.fade-slide-up');
+            const observer = new IntersectionObserver((entries, obs) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('in-view');
+                        obs.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.25 });
+
+            fadeUps.forEach(el => observer.observe(el));
+        });
+
+        // Promo Banner Logic
+        // Promo Banner Countdown
+        (function () {
+            const banner = document.getElementById('promo-banner');
+            const countdownEl = document.getElementById('countdown-timer');
+            const closeBtn = document.getElementById('promo-close-btn');
+            const promoDate = new Date('August 15, 2025 00:00:00').getTime();
+
+            let countdownInterval = null;
+
+            function showBanner() {
+                banner.style.display = 'flex';
+                document.body.classList.add('promo-active');
+            }
+
+            function hideBanner() {
+                banner.style.display = 'none';
+                document.body.classList.remove('promo-active');
+                localStorage.setItem('promoBannerHidden', 'true');
+                // Clear interval (defensive)
+                if (countdownInterval) clearInterval(countdownInterval);
+            }
+
+            function updateCountdown() {
+                const now = new Date().getTime();
+                const distance = promoDate - now;
+                if (distance < 0) {
+                    hideBanner();
+                    return;
+                }
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                countdownEl.textContent = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+            }
+
+            closeBtn.addEventListener('click', hideBanner);
+
+            const hiddenBefore = localStorage.getItem('promoBannerHidden');
+            if (!hiddenBefore) {
+                showBanner();
+                updateCountdown();
+                countdownInterval = setInterval(updateCountdown, 1000); // <-- now works!
+            }
+        })();
+
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,2307 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>LMS – Membership</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --primary: #ffe066;
+      --highlight: #8267e5;
+      --bg-dark: #181a23;
+      --surface: #23254a;
+      --surface-2: #22243a;
+      --surface-3: #222236;
+      --surface-card: #23243f;
+      --text-main: #ececf1;
+      --text-soft: #c0c3e6;
+      --shadow: 0 2px 18px rgba(20, 20, 34, 0.16);
+      --danger: #fb4848;
+      --success: #38d993;
+    }
+
+    html,
+    body {
+      height: 100%;
+      margin: 0;
+      font-family: "Inter", "Arial", sans-serif;
+      background: var(--bg-dark);
+      color: var(--text-main);
+      min-height: 100vh;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    aside.sidebar {
+      width: 250px;
+      background: var(--surface);
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100vh;
+      z-index: 99;
+      min-width: 250px;
+      overflow-y: auto;
+    }
+
+    .sidebar-header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 30px 0 18px 0;
+    }
+
+    .sidebar-header img {
+      width: 82px;
+      height: 82px;
+      border-radius: 50%;
+      object-fit: cover;
+      box-shadow: 0 4px 20px #efd24a55;
+      background: #fff;
+      margin-bottom: 9px;
+    }
+
+    .sidebar-divider {
+      width: 60%;
+      height: 3px;
+      background: linear-gradient(to right, #ffe066 0%, #8267e5 100%);
+      border-radius: 2px;
+      margin-bottom: 12px;
+    }
+
+    .sidebar-logo-text {
+      font-size: 1.24rem;
+      font-weight: 800;
+      color: var(--primary);
+      letter-spacing: 2px;
+      user-select: none;
+      text-shadow: 0 2px 10px #ffe06610;
+      margin-bottom: 19px;
+      text-align: center;
+      white-space: nowrap;
+    }
+
+    .sidebar nav {
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .sidebar nav a,
+    .sidebar nav button {
+      font-weight: 600;
+      font-size: 1.07rem;
+      color: var(--text-main);
+      text-decoration: none;
+      padding: 13px 20px 13px 17px;
+      border-radius: 0 14px 14px 0;
+      display: flex;
+      align-items: center;
+      gap: 1.1rem;
+      background: none;
+      border: none;
+      outline: none;
+      cursor: pointer;
+      transition: background 0.13s, color 0.13s;
+      border-left: 4px solid transparent;
+      margin-left: -1rem;
+    }
+
+    .sidebar nav a.active,
+    .sidebar nav a:hover,
+    .sidebar nav button.active,
+    .sidebar nav button:hover {
+      background: var(--primary);
+      color: #22223a !important;
+      border-left: 4px solid var(--highlight);
+      font-weight: 700;
+    }
+
+    .sidebar nav i {
+      min-width: 33px;
+      min-height: 33px;
+      font-size: 1.32rem;
+      border-radius: 50%;
+      background: #262740;
+      color: var(--highlight);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.15s, color 0.13s;
+    }
+
+    .sidebar nav a.active i,
+    .sidebar nav a:hover i,
+    .sidebar nav button.active i,
+    .sidebar nav button:hover i {
+      background: var(--highlight);
+      color: #fff !important;
+    }
+
+    .dropdown {
+      position: relative;
+    }
+
+    .dropdown-btn {
+      justify-content: space-between;
+    }
+
+    .dropdown .fa-chevron-down {
+      margin-left: auto;
+      font-size: 0.98em;
+      transition: transform 0.19s;
+    }
+
+    .dropdown.open .fa-chevron-down {
+      transform: rotate(180deg);
+    }
+
+    .dropdown-list {
+      display: none;
+      flex-direction: column;
+      padding-left: 34px;
+      background: transparent;
+      margin: 0;
+    }
+
+    .dropdown.open .dropdown-list {
+      display: flex;
+    }
+
+    .dropdown-list a {
+      padding: 7px 10px 7px 20px;
+      font-size: 0.96em;
+      border-radius: 8px;
+      margin-left: 0;
+      border-left: 4px solid transparent;
+    }
+
+    .dropdown-list a.active,
+    .dropdown-list a:hover {
+      background: var(--primary);
+      color: #22223a !important;
+      border-left: 4px solid var(--highlight);
+    }
+
+    .sidebar nav .secondary {
+      color: var(--text-soft);
+      font-weight: 600;
+      opacity: 0.86;
+      font-size: 0.98rem;
+    }
+
+    .sidebar-spacer {
+      flex-grow: 10;
+    }
+
+    .sidebar-footer {
+      padding-left: 7px;
+      padding-bottom: 22px;
+    }
+
+    .sidebar-footer a {
+      color: var(--text-main);
+      font-size: 1.07rem;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 1em;
+      padding: 13px 20px 13px 17px;
+      border-radius: 0 14px 14px 0;
+      transition: background 0.13s, color 0.13s;
+      border-left: 4px solid transparent;
+      margin-left: -1rem;
+      font-weight: 600;
+    }
+
+    .sidebar-footer a.active,
+    .sidebar-footer a:hover {
+      background: var(--primary);
+      color: #22223a !important;
+      border-left: 4px solid var(--highlight);
+    }
+
+    .sidebar-footer a i {
+      min-width: 33px;
+      min-height: 33px;
+      font-size: 1.32rem;
+      border-radius: 50%;
+      background: #262740;
+      color: var(--highlight);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.15s, color 0.13s;
+    }
+
+    .sidebar-footer a.active i,
+    .sidebar-footer a:hover i {
+      background: var(--highlight);
+      color: #fff !important;
+    }
+
+    main {
+      margin-left: 250px;
+      padding: 2.5rem 3.5rem 2.5rem 3.5rem;
+      flex: 1;
+      min-height: 100vh;
+      background: var(--bg-dark);
+    }
+
+    /* Topbar */
+    header.topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2.8rem;
+    }
+
+    .topbar input[type="text"] {
+      width: 100%;
+      max-width: 320px;
+      background: var(--surface-2);
+      color: var(--text-main);
+      padding: 0.75rem 1rem;
+      border-radius: 12px;
+      border: 1.5px solid #3e4159;
+      font-size: 1.02rem;
+      outline: none;
+      box-shadow: 0 1px 8px #ffe06617;
+    }
+
+    .profile-menu-container {
+      position: relative;
+      margin-left: 1.3rem;
+    }
+
+    .profile-avatar-btn {
+      background: var(--highlight);
+      color: #fff;
+      border-radius: 50%;
+      width: 44px;
+      height: 44px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-weight: 800;
+      font-size: 1.1rem;
+      border: 2.5px solid #ffe06655;
+      cursor: pointer;
+      box-shadow: 0 4px 18px var(--primary);
+      border: none;
+      outline: none;
+      transition: background 0.16s, color 0.16s;
+      text-decoration: none;
+      /* No underline */
+    }
+
+    .profile-dropdown {
+      display: none;
+      position: absolute;
+      right: 0;
+      top: 110%;
+      min-width: 180px;
+      background: var(--surface-3);
+      border-radius: 8px;
+      box-shadow: var(--shadow-card);
+      z-index: 40;
+      padding: 0.4em 0.1em;
+      flex-direction: column;
+      color: var(--text-main);
+      text-align: left;
+    }
+
+    .profile-menu-container.open .profile-dropdown {
+      display: flex;
+    }
+
+    .profile-dropdown .profile-meta {
+      font-weight: 800;
+      color: var(--primary);
+      font-size: 1.02em;
+      margin: 0.2em 0 0.2em 0;
+      line-height: 1.2;
+    }
+
+    .profile-dropdown .profile-role {
+      font-size: 1em;
+      padding: 0 1.22em 0.3em 2.15em;
+      color: var(--highlight);
+      font-style: italic;
+      font-weight: 600;
+      opacity: 0.82;
+    }
+
+    /* Remove underline on dropdown links and buttons */
+    .profile-dropdown a,
+    .profile-dropdown button {
+      background: none;
+      border: none;
+      color: var(--text-main);
+      padding: 0.8em 1.25em;
+      text-align: left;
+      cursor: pointer;
+      font-size: 1.07em;
+      font-family: inherit;
+      transition: background 0.13s, color 0.12s;
+      border-radius: 7px;
+      display: flex;
+      align-items: center;
+      gap: 0.7em;
+      text-decoration: none !important;
+    }
+
+    .profile-dropdown a:hover,
+    .profile-dropdown button:hover {
+      background: var(--primary);
+      color: #22223a;
+    }
+
+    .profile-dropdown i {
+      color: var(--highlight);
+      font-size: 1.02em;
+    }
+
+    .notif-btn {
+      background: none;
+      outline: none;
+      border: none;
+      padding: 0;
+      margin: 0 11px 0 0;
+      position: relative;
+      cursor: pointer;
+      text-decoration: none !important;
+    }
+
+    .notif-btn i {
+      font-size: 1.54em;
+      color: var(--highlight);
+      background: transparent;
+      border-radius: 50%;
+      transition: background 0.12s, color 0.13s;
+      padding: 7px 9px;
+    }
+
+    .notif-btn:hover i {
+      background: #23243f;
+      color: var(--primary);
+    }
+
+    @media (max-width: 900px) {
+      aside.sidebar {
+        width: 73px;
+        min-width: 73px;
+      }
+
+      .sidebar-header,
+      .sidebar-logo-text,
+      .sidebar-divider {
+        display: none !important;
+      }
+
+      main {
+        margin-left: 73px;
+      }
+    }
+
+    .btn-plan {
+      background: var(--highlight);
+      color: #fff;
+      padding: 1.05rem 1.8rem;
+      font-weight: 700;
+      font-size: 1.08rem;
+      border-radius: 12px;
+      cursor: pointer;
+      border: none;
+      box-shadow: 0 5px 16px rgba(130, 103, 229, 0.4);
+      transition: background 0.25s ease;
+      width: 100%;
+      margin-top: 1.3rem;
+      user-select: none;
+    }
+
+    .btn-plan:hover:not(:disabled) {
+      background: var(--primary);
+      color: #22223a;
+    }
+
+    .btn-plan[disabled] {
+      background: #444466;
+      cursor: default;
+      box-shadow: none;
+      color: #aaaabb;
+    }
+
+    .membership-intro {
+      width: 100%;
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .membership-intro h2 {
+      color: var(--primary);
+      font-weight: 800;
+      font-size: 2rem;
+      margin-bottom: 0.7rem;
+      text-align: center;
+    }
+
+    .membership-intro p {
+      font-size: 1.1rem;
+      color: var(--text-soft);
+      opacity: 0.9;
+    }
+
+    .plans-container {
+      display: flex;
+      justify-content: center;
+      gap: 1.8rem;
+      flex-wrap: wrap;
+      max-width: 1000px;
+      margin: 2rem auto 0 auto;
+      margin-top: 2rem;
+    }
+
+    .plan-card {
+      background: var(--surface-2);
+      border-radius: 15px;
+      box-shadow: var(--shadow);
+      padding: 1.8rem 2rem 2.3rem 2rem;
+      flex: 1 1 280px;
+      display: flex;
+      flex-direction: column;
+      gap: 1.4rem;
+      transition: box-shadow 0.3s ease;
+      user-select: none;
+    }
+
+    .plan-card:hover {
+      box-shadow: 0 8px 30px rgba(130, 103, 229, 0.45);
+    }
+
+    .plan-name {
+      font-weight: 800;
+      font-size: 1.35rem;
+      color: #fff;
+      margin-bottom: 0.7em;
+    }
+
+    .plan-price {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 0.3em;
+      color: #ffe988;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.11);
+    }
+
+    .plan-desc {
+      font-size: 1rem;
+      color: var(--text-soft);
+      line-height: 1.4;
+    }
+
+    /* Feature Comparison Table Style */
+
+    .section-heading {
+      font-family: 'Montserrat', Arial, sans-serif;
+      font-size: 2.1rem;
+      color: #ffe988;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-align: center;
+      margin-bottom: 0.4em;
+      text-shadow: 0 2px 8px rgba(79, 140, 255, 0.08);
+    }
+
+    .plan-comparison-table {
+      margin: 2.3rem auto;
+      max-width: 980px;
+      background: var(--surface-2, #fbf9ff);
+      border-radius: 15px;
+      box-shadow: 0 5px 32px rgba(123, 62, 247, 0.08);
+      overflow-x: auto;
+      border: 1.5px solid var(--surface-3, #ebeaf8);
+    }
+
+    .plan-comparison-table table {
+      width: 100%;
+      table-layout: fixed;
+      border-collapse: collapse;
+      background: transparent;
+      text-align: center;
+      font-family: inherit;
+    }
+
+    .plan-comparison-table th,
+    .plan-comparison-table td {
+      padding: 1.05em 0.85em;
+      border-bottom: 1px solid var(--surface-3, #ececf6);
+      font-size: 1rem;
+    }
+
+    .plan-comparison-table th {
+      background: #fff !important;
+      color: #000 !important;
+    }
+
+    .plan-comparison-table td:first-child,
+    .plan-comparison-table th:first-child {
+      width: 350px;
+      min-width: 210px;
+      max-width: 300px;
+      text-align: center;
+      color: #fff;
+      background: #2c2663;
+      font-weight: 700;
+    }
+
+    .plan-comparison-table thead tr {
+      background: #fff !important;
+      color: #000 !important;
+    }
+
+    .plan-comparison-table thead tr th {
+      color: #000 !important;
+    }
+
+    /* Feature check/cross styling for better theming: */
+    .plan-comparison-table td.included {
+      color: var(--success, #28a745);
+      font-weight: 700;
+      font-size: 1.1em;
+    }
+
+    .plan-comparison-table td.not-included {
+      color: var(--danger, #f87171);
+      font-weight: 700;
+      font-size: 1.1em;
+    }
+
+    .plan-badge {
+      display: inline-block;
+      background: linear-gradient(90deg, #fbbf24 85%, #ffe38b 100%);
+      color: #fff;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      font-weight: 900;
+      font-size: 0.90em;
+      padding: 0.30em 1em 0.30em 1.6em;
+      border-top-right-radius: 16px;
+      border-bottom-right-radius: 16px;
+      border-top-left-radius: 4px;
+      border-bottom-left-radius: 4px;
+      position: relative;
+      margin-bottom: 8px;
+      margin-top: 2px;
+      margin-left: 0;
+      box-shadow: 0 2px 10px rgba(243, 206, 69, 0.15);
+      border: 1.5px solid #f59e0b;
+      z-index: 2;
+    }
+
+    .plan-badge ::before {
+      content: '';
+      position: absolute;
+      left: 0.2em;
+      top: 0.21em;
+      bottom: 0.21em;
+      width: 0.5em;
+      background: #f59e0b;
+      /* deep gold */
+      border-top-left-radius: 3px;
+      border-bottom-left-radius: 3px;
+      z-index: -1;
+    }
+
+    .subscription-toggle {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+      font-family: Arial, sans-serif;
+      font-size: 16px;
+      justify-content: center;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.75rem;
+      width: 100%;
+      margin-bottom: 1rem;
+    }
+
+    .savings-label {
+      visibility: hidden;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #28a745;
+      user-select: none;
+    }
+
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 50px;
+      height: 24px;
+      margin-right: 10px;
+      margin-top: 10px;
+    }
+
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #ccc;
+      transition: .4s;
+      border-radius: 24px;
+    }
+
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 18px;
+      width: 18px;
+      left: 3px;
+      bottom: 3px;
+      background-color: white;
+      transition: .4s;
+      border-radius: 50%;
+    }
+
+    input:checked+.slider {
+      background-color: #2196F3;
+    }
+
+    input:checked+.slider:before {
+      transform: translateX(26px);
+    }
+
+    /* Only add below line if your modal is not styled yet */
+    #subscriptionModal {
+      display: none;
+      position: fixed;
+      z-index: 999;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0, 0, 0, 0.4);
+    }
+
+    #modalContent {
+      background-color: #fff;
+      margin: 10% auto;
+      padding: 20px;
+      border-radius: 8px;
+      width: 320px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+      font-family: Arial, sans-serif;
+    }
+
+    #modalHeading {
+      font-size: 1.25rem;
+      margin-bottom: 12px;
+    }
+
+    #closeModalBtn {
+      float: right;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 1.2rem;
+      border: none;
+      background: none;
+    }
+
+
+    .features-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      color: var(--text-main);
+      font-size: 0.95rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+    }
+
+    .features-list li {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+
+    .features-list li i {
+      color: var(--primary);
+      font-size: 1.1rem;
+      min-width: 20px;
+      text-align: center;
+    }
+
+    /* Extra Styling */
+    .included {
+      color: #22bb55;
+      font-weight: bold;
+      font-size: 1.15em;
+    }
+
+    .not-included {
+      color: #ff3755;
+      font-size: 1.15em;
+      font-weight: bold;
+    }
+
+    /* Modal styles */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(10, 10, 16, 0.64);
+      z-index: 999;
+      display: none;
+    }
+
+    .modal-overlay.active {
+      display: block;
+    }
+
+    .modal {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: var(--surface-3);
+      padding: 1.6rem 1.2rem 1.2rem 1.5rem;
+      border-radius: 15px;
+      box-shadow: var(--shadow);
+      max-width: 650px;
+      width: 560px;
+      z-index: 1000;
+      flex-direction: column;
+      max-height: 80vh;
+      color: var(--text-main);
+      display: none;
+      animation: fadeIn 0.3s ease;
+      font-size: 0.9rem;
+      font-weight: 700;
+      letter-spacing: 0.01em;
+      user-select: none;
+    }
+
+    .modal.active {
+      display: flex;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translate(-50%, -45%);
+      }
+
+      to {
+        opacity: 1;
+        transform: translate(-50%, -50%);
+      }
+    }
+
+    .modal-content {
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+      overflow: hidden;
+      user-select: text;
+      font-weight: 600;
+    }
+
+    .modal-content h2 {
+      margin-bottom: 1em;
+      text-align: center;
+      color: var(--primary);
+      font-weight: 700;
+      font-size: 1.1rem;
+      white-space: nowrap;
+    }
+
+    form#subscriptionForm {
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+      gap: 1em;
+      overflow-y: auto;
+      padding-right: 6px;
+      user-select: auto;
+    }
+
+    label {
+      font-weight: 600;
+      font-size: 0.95rem;
+      color: var(--text-main);
+      margin-bottom: 0.2em;
+      display: block;
+      letter-spacing: 0.02em;
+      user-select: text;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    select {
+      padding: 0.7em 1em;
+      font-size: 0.94rem;
+      border-radius: 7px;
+      background: var(--surface-card);
+      color: var(--text-main);
+      border: 1.4px solid var(--highlight);
+      width: 100%;
+      margin-bottom: 0.38em;
+      box-sizing: border-box;
+      outline-offset: 1.5px;
+      transition: outline 0.18s;
+    }
+
+    input[type="text"]:focus,
+    input[type="email"]:focus,
+    select:focus {
+      outline: 2px solid var(--primary);
+    }
+
+    .has-success input,
+    .has-success select {
+      border-color: var(--success) !important;
+    }
+
+    .has-error input,
+    .has-error select {
+      border-color: var(--danger) !important;
+    }
+
+    .form-row {
+      display: flex;
+      gap: 1em;
+    }
+
+    .form-row>div {
+      flex: 1;
+    }
+
+    .payment-type-tabs {
+      display: flex;
+      gap: 0.8em;
+      margin-bottom: 0.85em;
+      flex-shrink: 0;
+      user-select: none;
+      flex-wrap: nowrap;
+    }
+
+    .payment-tab {
+      flex: 1 1 0;
+      padding: 0.6em 0.9em;
+      border-radius: 7px;
+      border: none;
+      background: var(--surface-card);
+      color: var(--highlight);
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.16s, color 0.16s;
+      box-shadow: 0 1px 3px #23243f22;
+      user-select: none;
+      min-width: 150px;
+      text-align: center;
+      font-size: 0.9rem;
+    }
+
+    .payment-tab.active,
+    .payment-tab:focus {
+      background: var(--highlight);
+      color: #fff;
+      outline: none;
+    }
+
+    .payment-pane {
+      margin-bottom: 0.4em;
+      user-select: auto;
+    }
+
+    /* Netbanking extended */
+    .netbanking-extended {
+      display: flex;
+      flex-direction: column;
+      gap: 0.6em;
+    }
+
+    .netbanking-extended label {
+      margin-top: 0.6em;
+    }
+
+    .netbanking-extended input[type="text"] {
+      width: 100%;
+    }
+
+    @media (max-width: 520px) {
+      .modal {
+        max-width: 98vw;
+        width: 97vw;
+        padding: 1rem 1vw 0.7rem 1vw;
+      }
+
+      .form-row {
+        flex-direction: column;
+        gap: 0.5em;
+      }
+
+      .payment-tab {
+        flex: 1 1 100%;
+        min-width: auto;
+      }
+
+      .payment-type-tabs {
+        gap: 0.5em;
+      }
+    }
+
+    .modal-actions {
+      display: flex;
+      justify-content: space-between;
+      gap: 1em;
+      margin-top: 1em;
+      flex-shrink: 0;
+      user-select: none;
+    }
+
+    .btn-cancel {
+      padding: 0.77em 1.5em;
+      background: #35345b;
+      color: var(--primary);
+      border: none;
+      border-radius: 7px;
+      cursor: pointer;
+      font-weight: 700;
+      user-select: none;
+    }
+
+    .btn-cancel:hover {
+      background: #22223a;
+    }
+
+    .btn-confirm {
+      padding: 0.77em 1.5em;
+      background: var(--highlight);
+      color: #fff;
+      border: none;
+      border-radius: 7px;
+      cursor: pointer;
+      font-weight: 700;
+      box-shadow: 0 2px 10px #8267e535;
+      user-select: none;
+      display: flex;
+      align-items: center;
+      gap: 0.5em;
+      margin-left: auto;
+    }
+
+    .btn-confirm[disabled] {
+      background: #88889c;
+      color: #e6e6ec;
+      cursor: not-allowed;
+    }
+
+    .btn-confirm .spinner {
+      border: 2.5px solid rgba(255, 255, 255, 0.5);
+      border-top: 2.5px solid var(--accent);
+      border-radius: 50%;
+      width: 18px;
+      height: 18px;
+      animation: spin 0.7s linear infinite;
+      display: inline-block;
+    }
+
+    @keyframes spin {
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+
+    .error-message {
+      color: var(--danger);
+      font-size: 0.85rem;
+      margin-top: -0.15em;
+      margin-bottom: 0.15em;
+      user-select: text;
+    }
+
+    .success-message {
+      color: var(--success);
+      font-size: 1rem;
+      text-align: center;
+      margin-bottom: 0.6em;
+      user-select: text;
+    }
+
+    .danger-message {
+      color: var(--danger);
+      font-size: 1rem;
+      text-align: center;
+      margin-bottom: 0.6em;
+      user-select: text;
+    }
+
+    .upi-verify-btn {
+      padding: 0.5em 1.1em;
+      background: var(--highlight);
+      color: #fff;
+      border: none;
+      border-radius: 7px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      margin-left: 8px;
+      transition: background 0.14s, color 0.14s;
+      user-select: none;
+    }
+
+    .upi-verify-btn:disabled {
+      background: #88889c;
+      color: #eee;
+      cursor: not-allowed;
+    }
+
+    .upi-provider-hint {
+      font-size: 0.9em;
+      color: var(--text-soft);
+      margin-bottom: 0;
+      margin-top: -0.2em;
+      user-select: text;
+    }
+
+
+    .toggle-container {
+      margin-top: 0.5rem;
+      margin-bottom: 2rem;
+      position: relative;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .savings-message {
+      color: #28a745;
+      font-weight: 500;
+      margin-bottom: 0.75rem;
+      font-size: 1rem;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+
+    .savings-message.visible {
+      visibility: visible;
+      opacity: 1;
+    }
+
+    .plan-toggle-togglegroup {
+      position: relative;
+      display: flex;
+      border: 1.5px solid #e3e1e9;
+      border-radius: 2rem;
+      background: #fff;
+      overflow: hidden;
+      width: 260px;
+      /* fixed width for accurate sliding */
+    }
+
+    .toggle-option {
+      flex: 1;
+      position: relative;
+      z-index: 2;
+      padding: 0.7rem 0;
+      font-size: 1.1rem;
+      border: none;
+      background: none;
+      color: #212133;
+      cursor: pointer;
+      outline: none;
+      transition: color 0.3s cubic-bezier(.4, 0, .2, 1);
+      text-align: center;
+    }
+
+    .toggle-option.active {
+      color: #fff;
+    }
+
+    .slider-pill {
+      position: absolute;
+      top: 3px;
+      bottom: 3px;
+      left: 3px;
+      width: calc(50% - 6px);
+      /* half width of toggle-group minus insets */
+      background: #7b3ef7;
+      border-radius: 2rem;
+      box-shadow: 0 2px 16px -7px #7b3ef7;
+      transition: left 0.3s cubic-bezier(.4, 0, .2, 1);
+      z-index: 1;
+    }
+  </style>
+</head>
+
+<body>
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <img src="/assets/images/logo.png" alt="SkillSpark Logo" />
+      <div class="sidebar-divider"></div>
+      <div class="sidebar-logo-text">SkillSpark</div>
+    </div>
+    <nav>
+      <a href="/pages/dashboard.html"><i class="fa-solid fa-house"></i> <span>Dashboard</span></a>
+      <a href="/pages/calendar.html"><i class="fa-solid fa-calendar-days"></i> <span>Calendar</span></a>
+      <div class="dropdown" id="coursesMenu">
+        <button class="dropdown-btn" aria-haspopup="true" aria-expanded="false">
+          <i class="fa-solid fa-layer-group"></i> <span>Courses</span>
+          <i class="fa-solid fa-chevron-down"></i>
+        </button>
+        <div class="dropdown-list" role="menu" aria-label="Courses submenu">
+          <a href="/pages/my-courses.html"><i class="fa-solid fa-graduation-cap"></i>
+            <span>My Courses</span></a>
+          <a href="/pages/browse-courses.html"><i class="fa-solid fa-book"></i> <span>Browse Courses</span></a>
+        </div>
+      </div>
+      <a href="/pages/community.html"><i class="fa-solid fa-users"></i> <span>Community</span></a>
+      <a href="/pages/cart.html"><i class="fa-solid fa-cart-shopping"></i> <span>Cart</span></a>
+      <a href="/pages/membership.html" class="active" class="secondary"><i class="fa-solid fa-crown"></i>
+        <span>Membership</span></a>
+      <a href="/pages/help.html"><i class="fa-solid fa-circle-question"></i> <span>Help</span></a>
+      <div class="sidebar-spacer"></div>
+    </nav>
+  </aside>
+  <main>
+    <header class="topbar">
+      <input id="search-input" type="text" placeholder="Search features, plans, or help..." />
+      <div style="display: flex; align-items: center; gap: 0.4rem">
+        <button class="notif-btn" title="Notifications" aria-label="Notifications">
+          <i class="fa-solid fa-bell"></i>
+        </button>
+        <div class="profile-menu-container" id="profileMenuWrap">
+          <button class="profile-avatar-btn" id="profileAvatarBtn" aria-haspopup="true" aria-expanded="false">
+            <span id="profileInitials">L</span>
+          </button>
+          <div class="profile-dropdown" id="profileDropdown">
+            <div class="profile-meta" id="profileName">Lokesh G</div>
+            <div class="profile-role" id="profileRole" style="display: none">
+              Pro Member
+            </div>
+            <a href="#"><i class="fa-solid fa-user"></i> Profile</a>
+            <a href="#"><i class="fa-solid fa-gear"></i> Settings</a>
+            <button type="button">
+              <i class="fa-solid fa-arrow-right-from-bracket"></i> Logout
+            </button>
+          </div>
+        </div>
+      </div>
+    </header>
+    <section class="membership-intro">
+      <h2>Upgrade Your Learning Experience</h2>
+      <p>
+        Become a member to unlock exclusive courses, priority support, and personalized learning paths designed for
+        you.
+      </p>
+    </section>
+
+    <!-- Toggle Switch -->
+    <div class="toggle-container">
+      <div class="savings-message">Get 16% off with a yearly subscription.</div>
+
+      <div class="plan-toggle-togglegroup" style="position:relative;">
+        <div class="slider-pill"></div>
+        <button class="toggle-option active" id="monthlyBtn" type="button">Monthly</button>
+        <button class="toggle-option" id="yearlyBtn" type="button">Yearly</button>
+      </div>
+    </div>
+
+    <section class="plans-container" aria-label="Membership Plans">
+      <article class="plan-card" role="region" aria-labelledby="free-title">
+        <h3 class="plan-name" id="free-title">Free Plan</h3>
+        <div class="plan-price" id="freePrice">₹0 / month</div>
+        <p class="plan-desc">Get started with access to selected courses and community forums.</p>
+        <ul class="features-list">
+          <li><i class="fa-solid fa-check"></i> Access to limited courses</li>
+          <li><i class="fa-solid fa-check"></i> Community forum participation</li>
+          <li><i class="fa-solid fa-xmark" style="color: #f87171"></i> No premium content</li>
+          <li><i class="fa-solid fa-xmark" style="color: #f87171"></i> No priority support</li>
+        </ul>
+        <button class="btn-plan" disabled aria-label="Current Free Plan">Current Plan</button>
+      </article>
+
+      <!-- Pro Plan -->
+      <article class="plan-card" role="region" aria-labelledby="pro-title">
+        <span class="plan-badge">Most Popular</span>
+        <h3 class="plan-name" id="pro-title">Pro Membership</h3>
+        <div class="plan-price" id="proPrice">₹499 / month</div>
+        <p class="plan-desc">Unlock premium courses and get priority support to enhance your skills faster.</p>
+        <ul class="features-list">
+          <li><i class="fa-solid fa-check"></i> Access to all courses</li>
+          <li><i class="fa-solid fa-check"></i> Priority customer support</li>
+          <li><i class="fa-solid fa-check"></i> Exclusive webinars & resources</li>
+          <li><i class="fa-solid fa-xmark" style="color: #f87171"></i> No 1-on-1 mentoring</li>
+        </ul>
+        <button class="btn-plan" id="proButton" data-plan="pro"
+          aria-label="Subscribe to Pro Membership">Subscribe</button>
+      </article>
+
+      <!-- Premium Plan -->
+      <article class="plan-card" role="region" aria-labelledby="premium-title">
+        <h3 class="plan-name" id="premium-title">Premium Membership</h3>
+        <div class="plan-price" id="premiumPrice">₹999 / month</div>
+        <p class="plan-desc">Enjoy all Pro features plus 1-on-1 mentoring and personalized coaching.</p>
+        <ul class="features-list">
+          <li><i class="fa-solid fa-check"></i> All Pro membership benefits</li>
+          <li><i class="fa-solid fa-check"></i> Personalized 1-on-1 mentoring</li>
+          <li><i class="fa-solid fa-check"></i> Early access to new courses</li>
+          <li><i class="fa-solid fa-check"></i> Special discounts on events</li>
+        </ul>
+        <button class="btn-plan" id="premiumButton" data-plan="premium"
+          aria-label="Subscribe to Premium Membership">Subscribe</button>
+      </article>
+    </section>
+
+    <div class="plan-comparison-table">
+      <h2 class="section-heading">Membership Features Comparison</h2>
+      <table>
+        <thead>
+          <tr class="feature-row">
+            <th>Feature</th>
+            <th>Free</th>
+            <th>Pro</th>
+            <th>Premium</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="feature-row">
+            <td>Limited courses</td>
+            <td class="included">✔️</td>
+            <td class="included">✔️</td>
+            <td class="included">✔️</td>
+          </tr>
+          <tr class="feature-row">
+            <td>All courses unlocked</td>
+            <td class="not-included">—</td>
+            <td class="included">✔️</td>
+            <td class="included">✔️</td>
+          </tr>
+          <tr class="feature-row">
+            <td>Community access</td>
+            <td class="included">✔️</td>
+            <td class="included">✔️</td>
+            <td class="included">✔️</td>
+          </tr>
+          <tr class="feature-row">
+            <td>Priority support</td>
+            <td class="not-included">—</td>
+            <td class="included">✔️</td>
+            <td class="included">✔️</td>
+          </tr>
+          <tr class="feature-row">
+            <td>Premium content</td>
+            <td class="not-included">—</td>
+            <td class="included">✔️</td>
+            <td class="included">✔️</td>
+          </tr>
+          <tr class="feature-row">
+            <td>1-on-1 mentoring</td>
+            <td class="not-included">—</td>
+            <td class="not-included">—</td>
+            <td class="included">✔️</td>
+          </tr>
+          <tr class="feature-row">
+            <td>Personalized coaching</td>
+            <td class="not-included">—</td>
+            <td class="not-included">—</td>
+            <td class="included">✔️</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div id="no-results" style="display:none; color: red; margin-top:10px;">No results found.</div>
+
+    <!-- Subscription Modal -->
+    <div id="subscriptionModal" role="dialog" aria-modal="true" aria-labelledby="modalHeading" style="display:none;">
+      <div id="modalContent">
+        <button id="closeModalBtn" aria-label="Close subscription modal">&times;</button>
+        <h2 id="modalHeading">Subscription</h2>
+        <p id="modalBody">Processing subscription...</p>
+      </div>
+    </div>
+  </main>
+
+  <!-- Payment Modal -->
+  <div class="modal-overlay" tabindex="-1" aria-hidden="true"></div>
+  <div id="paymentModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modalHeader" tabindex="-1"
+    aria-hidden="true">
+    <div class="modal-content">
+      <h2 id="modalHeader" style="font-size: 1rem; white-space: nowrap">
+        Subscribe to Pro Membership
+      </h2>
+      <form id="subscriptionForm" autocomplete="off" novalidate>
+        <!-- Payment type tabs -->
+        <div class="payment-type-tabs" role="tablist" aria-label="Payment Method">
+          <button type="button" class="payment-tab active" data-type="card" aria-selected="true" role="tab" id="tabCard"
+            aria-controls="panelCard">
+            Card
+          </button>
+          <button type="button" class="payment-tab" data-type="upi" aria-selected="false" role="tab" id="tabUPI"
+            aria-controls="panelUPI">
+            UPI
+          </button>
+          <button type="button" class="payment-tab" data-type="netbanking" aria-selected="false" role="tab"
+            id="tabNetbanking" aria-controls="panelNetbanking">
+            NetBanking
+          </button>
+        </div>
+
+        <!-- Membership type hidden input -->
+        <input type="hidden" id="membershipType" name="membershipType" value="pro" />
+
+        <!-- Card -->
+        <div class="payment-pane card-pane" role="tabpanel" id="panelCard" aria-labelledby="tabCard">
+          <div class="fld">
+            <label for="cardName">Cardholder Name</label>
+            <input type="text" id="cardName" name="cardName" placeholder="Enter name on card" required
+              aria-required="true" />
+            <div class="error-message" aria-live="assertive"></div>
+          </div>
+          <div class="fld">
+            <label for="cardNumber">Card Number</label>
+            <input type="text" id="cardNumber" name="cardNumber" pattern="\d{13,19}" placeholder="1234 5678 9012 3456"
+              required aria-required="true" />
+            <div class="error-message" aria-live="assertive"></div>
+          </div>
+          <div class="form-row">
+            <div class="fld">
+              <label for="expiry">Expiry</label>
+              <input type="text" id="expiry" name="expiry" pattern="(0[1-9]|1[0-2])\/?([0-9]{2})" placeholder="MM/YY"
+                required aria-required="true" />
+              <div class="error-message" aria-live="assertive"></div>
+            </div>
+            <div class="fld">
+              <label for="cvv">CVV</label>
+              <input type="text" id="cvv" name="cvv" maxlength="3" pattern="\d{3}" placeholder="123" required
+                aria-required="true" />
+              <div class="error-message" aria-live="assertive"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- UPI -->
+        <div class="payment-pane upi-pane" style="display: none" role="tabpanel" id="panelUPI" aria-labelledby="tabUPI">
+          <div class="fld">
+            <label for="upiId">UPI ID</label>
+            <div style="display: flex; align-items: center; gap: 0.5em">
+              <input type="text" id="upiId" name="upiId" style="flex: 1" placeholder="example@upi" required
+                aria-required="true" autocomplete="off" />
+              <button type="button" class="upi-verify-btn" id="upiVerifyBtn">
+                Verify
+              </button>
+            </div>
+            <div class="upi-provider-hint" id="upiProviderHint"></div>
+            <div class="error-message" aria-live="assertive" id="upiStatusMsg"></div>
+          </div>
+        </div>
+
+        <!-- Netbanking -->
+        <div class="payment-pane netbanking-pane" style="display: none" role="tabpanel" id="panelNetbanking"
+          aria-labelledby="tabNetbanking">
+          <div class="fld">
+            <label for="bankSelect">Select Bank</label>
+            <select id="bankSelect" name="bankSelect" required aria-required="true">
+              <option value="">--Select Bank--</option>
+              <option>SBI</option>
+              <option>ICICI Bank</option>
+              <option>HDFC</option>
+              <option>Axis Bank</option>
+              <option>Kotak</option>
+              <option>Bank of Baroda</option>
+              <option>IndusInd</option>
+              <option>Yes Bank</option>
+              <option>IDFC First</option>
+            </select>
+            <div style="
+                  font-size: 0.93rem;
+                  color: var(--text-soft);
+                  margin-top: -0.3em;
+                ">
+              Confirmation will take you to your netbanking portal.
+            </div>
+            <div class="error-message" aria-live="assertive"></div>
+          </div>
+          <div class="netbanking-extended">
+            <label for="ifscInput">Enter IFSC Code</label>
+            <input type="text" id="ifscInput" name="ifscInput" maxlength="11" placeholder="e.g. SBIN0001234"
+              autocomplete="off" />
+            <div id="ifscMessage" style="
+                  font-size: 0.9rem;
+                  min-height: 1.3em;
+                  color: var(--text-soft);
+                "></div>
+          </div>
+        </div>
+
+        <div class="fld">
+          <label for="email">Email Address</label>
+          <input type="email" id="email" name="email" placeholder="you@example.com" required aria-required="true" />
+          <div class="error-message" aria-live="assertive"></div>
+        </div>
+
+        <div id="formMsg" role="alert" aria-live="assertive" style="min-height: 1.5em"></div>
+
+        <div class="modal-actions">
+          <button type="button" class="btn-cancel">Cancel</button>
+          <button type="submit" class="btn-confirm" aria-live="polite">
+            <span id="spinner" class="spinner" style="display: none"></span><span id="btnText">Confirm Payment</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+
+      // === User Profile & Dropdown ===
+      const user = { initials: "L", name: "Lokesh G", member: "pro" };
+      const profileInitials = document.getElementById("profileInitials");
+      const profileName = document.getElementById("profileName");
+      const profileRole = document.getElementById("profileRole");
+
+      function updateProfileDisplay() {
+        profileInitials.textContent = user.name ? user.name[0].toUpperCase() : "L";
+        profileName.textContent = user.name || "Lokesh G";
+        if (user.member === "pro") {
+          profileRole.textContent = "Pro Member";
+          profileRole.style.display = "block";
+        } else if (user.member === "premium") {
+          profileRole.textContent = "Premium Member";
+          profileRole.style.display = "block";
+        } else {
+          profileRole.style.display = "none";
+        }
+      }
+      updateProfileDisplay();
+
+      const profileBtn = document.getElementById("profileAvatarBtn");
+      const profileWrap = document.getElementById("profileMenuWrap");
+      profileBtn?.addEventListener('click', e => {
+        e.stopPropagation();
+        profileWrap.classList.toggle("open");
+      });
+      document.body.addEventListener("click", e => {
+        if (!profileWrap.contains(e.target)) profileWrap.classList.remove("open");
+      });
+
+      // === Courses Dropdown ===
+      const coursesMenu = document.getElementById("coursesMenu");
+      coursesMenu?.querySelector(".dropdown-btn")?.addEventListener('click', e => {
+        e.stopPropagation();
+        coursesMenu.classList.toggle("open");
+      });
+      document.body.addEventListener("click", e => {
+        if (!coursesMenu.contains(e.target)) coursesMenu.classList.remove("open");
+      });
+
+      // === Pricing Plans and Toggle ===
+      const plans = {
+        free: { monthlyPrice: 0, yearlyPrice: 0, label: "Free Plan" },
+        pro: { monthlyPrice: 499, yearlyPrice: Math.round(499 * 12 * 0.85), label: "Pro Membership" },
+        premium: { monthlyPrice: 999, yearlyPrice: Math.round(999 * 12 * 0.85), label: "Premium Membership" }
+      };
+
+      let isYearly = false; // Default monthly
+
+      // Elements related to pricing toggle and buttons
+      const monthlyBtn = document.getElementById('monthlyBtn');
+      const yearlyBtn = document.getElementById('yearlyBtn');
+      const sliderPill = document.querySelector('.slider-pill');
+      // Note: planDurationLabel is undefined in HTML. You may want to remove references to it.
+      // const planDurationLabel = document.getElementById('planDurationLabel'); 
+      const savingsLabel = document.querySelector('.savings-message');
+      const freePriceElem = document.getElementById('freePrice');
+      const proPriceElem = document.getElementById('proPrice');
+      const premiumPriceElem = document.getElementById('premiumPrice');
+      const proButton = document.getElementById('proButton');
+      const premiumButton = document.getElementById('premiumButton');
+
+      const subscriptionModal = document.getElementById('subscriptionModal');
+      const modalHeading = document.getElementById('modalHeading');
+      const modalBody = document.getElementById('modalBody');
+      const closeModalBtn = document.getElementById('closeModalBtn');
+
+      // Update the prices and button texts
+      function updatePlanPrices() {
+        if (freePriceElem) freePriceElem.textContent = isYearly ? "₹0 / year" : "₹0 / month";
+        if (proPriceElem) proPriceElem.textContent = isYearly
+          ? `₹${plans.pro.yearlyPrice} / year`
+          : `₹${plans.pro.monthlyPrice} / month`;
+        if (proButton) {
+          proButton.textContent = isYearly ? "Subscribe Yearly" : "Subscribe Monthly";
+          proButton.setAttribute('aria-label', isYearly
+            ? "Subscribe to Pro Membership Yearly Plan"
+            : "Subscribe to Pro Membership Monthly Plan");
+        }
+        if (premiumPriceElem) premiumPriceElem.textContent = isYearly
+          ? `₹${plans.premium.yearlyPrice} / year`
+          : `₹${plans.premium.monthlyPrice} / month`;
+        if (premiumButton) {
+          premiumButton.textContent = isYearly ? "Subscribe Yearly" : "Subscribe Monthly";
+          premiumButton.setAttribute('aria-label', isYearly
+            ? "Subscribe to Premium Membership Yearly Plan"
+            : "Subscribe to Premium Membership Monthly Plan");
+        }
+        if (savingsLabel) {
+          if (isYearly) {
+            savingsLabel.classList.add('visible');
+          } else {
+            savingsLabel.classList.remove('visible');
+          }
+        }
+
+      }
+
+      function setActiveToggleButton() {
+        if (isYearly) {
+          yearlyBtn?.classList.add('active');
+          monthlyBtn?.classList.remove('active');
+        } else {
+          monthlyBtn?.classList.add('active');
+          yearlyBtn?.classList.remove('active');
+        }
+      }
+
+      function updateToggleUI() {
+        if (!sliderPill || !monthlyBtn || !yearlyBtn) return;
+        const pillWidth = monthlyBtn.offsetWidth; // assumes buttons equal width
+        sliderPill.style.width = pillWidth - 6 + 'px'; // 6 = combined inset
+        if (isYearly) {
+          yearlyBtn.classList.add('active');
+          monthlyBtn.classList.remove('active');
+          sliderPill.style.left = pillWidth + 6 + 'px'; // move pill right
+        } else {
+          monthlyBtn.classList.add('active');
+          yearlyBtn.classList.remove('active');
+          sliderPill.style.left = '3px'; // pill left
+        }
+        updatePlanPrices();
+      }
+
+      // Unified listener for toggles with toggle UI and prices update
+      monthlyBtn?.addEventListener('click', () => {
+        if (isYearly) {
+          isYearly = false;
+          updateToggleUI();
+        }
+      });
+
+      yearlyBtn?.addEventListener('click', () => {
+        if (!isYearly) {
+          isYearly = true;
+          updateToggleUI();
+        }
+      });
+
+      // initialize on page load
+      window.addEventListener('load', () => {
+        updateToggleUI();
+      });
+
+      // === Thank You modal for subscription ===
+      function openThankYouModal(planKey) {
+        const price = isYearly ? plans[planKey].yearlyPrice : plans[planKey].monthlyPrice;
+        const durationLabel = isYearly ? 'Yearly' : 'Monthly';
+        if (modalHeading) modalHeading.textContent = `${durationLabel} Subscription - ${plans[planKey].label} (₹${price})`;
+        if (modalBody) modalBody.textContent = "Thank you for choosing this plan! Payment processing is simulated.";
+        if (subscriptionModal) {
+          subscriptionModal.style.display = "flex";
+          closeModalBtn?.focus();
+        }
+      }
+
+      proButton?.addEventListener('click', () => openModalForMembership('pro'));
+      premiumButton?.addEventListener('click', () => openModalForMembership('premium'));
+
+      closeModalBtn?.addEventListener('click', () => {
+        if (subscriptionModal) subscriptionModal.style.display = "none";
+        if (modalHeading) modalHeading.textContent = "Subscription";
+        if (modalBody) modalBody.textContent = "Processing subscription...";
+      });
+
+      window.addEventListener('click', (event) => {
+        if (event.target === subscriptionModal) {
+          subscriptionModal.style.display = "none";
+          if (modalHeading) modalHeading.textContent = "Subscription";
+          if (modalBody) modalBody.textContent = "Processing subscription...";
+        }
+      });
+
+      // === Payment Modal & Form Handling ===
+      const modal = document.getElementById("paymentModal");
+      const overlay = document.querySelector(".modal-overlay");
+      const cancelBtn = document.querySelector(".btn-cancel");
+      const tabs = document.querySelectorAll(".payment-tab");
+      const cardPane = document.querySelector(".card-pane");
+      const upiPane = document.querySelector(".upi-pane");
+      const netBankingPane = document.querySelector(".netbanking-pane");
+      const membershipTypeInput = document.getElementById("membershipType");
+      const subscriptionForm = document.getElementById("subscriptionForm");
+      const btnConfirm = subscriptionForm?.querySelector(".btn-confirm");
+      const btnText = document.getElementById("btnText");
+      const spinner = document.getElementById("spinner");
+      const formMsg = document.getElementById("formMsg");
+      const ifscInput = document.getElementById("ifscInput");
+      const ifscMessage = document.getElementById("ifscMessage");
+      const upiId = document.getElementById("upiId");
+      const upiVerifyBtn = document.getElementById("upiVerifyBtn");
+      const upiProviderHint = document.getElementById("upiProviderHint");
+      const upiStatusMsg = document.getElementById("upiStatusMsg");
+
+      const validators = {
+        cardName: v => v.trim().length > 4,
+        cardNumber: v => /^\d{13,19}$/.test(v.replace(/\s/g, "")),
+        expiry: v => /^(0[1-9]|1[0-2])\/?([0-9]{2})$/.test(v),
+        cvv: v => /^\d{3}$/.test(v),
+        upiId: v => /^[\w.-]{3,}@[a-zA-Z\d]{2,}$/i.test(v.trim()),
+        bankSelect: v => v.trim() !== "",
+        email: v => /^[^@]+@[^@]+\.[a-z]{2,}$/i.test(v),
+      };
+
+      function showError(input, message) {
+        let fld = input.closest(".fld");
+        if (fld) {
+          fld.classList.remove("has-success");
+          fld.classList.add("has-error");
+          const errDiv = fld.querySelector(".error-message");
+          if (errDiv) errDiv.textContent = message;
+          input.setAttribute("aria-invalid", "true");
+        }
+      }
+      function showSuccess(input) {
+        let fld = input.closest(".fld");
+        if (fld) {
+          fld.classList.remove("has-error");
+          fld.classList.add("has-success");
+          const errDiv = fld.querySelector(".error-message");
+          if (errDiv) errDiv.textContent = "";
+          input.removeAttribute("aria-invalid");
+        }
+      }
+      function clearFieldState(input) {
+        let fld = input.closest(".fld");
+        if (fld) {
+          fld.classList.remove("has-error");
+          fld.classList.remove("has-success");
+          const errDiv = fld.querySelector(".error-message");
+          if (errDiv) errDiv.textContent = "";
+          input.removeAttribute("aria-invalid");
+        }
+      }
+
+      function validateFormFields() {
+        let valid = true;
+        if (formMsg) formMsg.textContent = "";
+        const inputs = subscriptionForm ? subscriptionForm.querySelectorAll("input, select") : [];
+        inputs.forEach(input => clearFieldState(input));
+
+        if (!membershipTypeInput || !membershipTypeInput.value || !["pro", "premium"].includes(membershipTypeInput.value)) {
+          if (formMsg) formMsg.innerHTML = '<div class="danger-message">Membership type missing or invalid.</div>';
+          valid = false;
+        }
+
+        if (cardPane && cardPane.style.display !== "none") {
+          if (!validators.cardName(subscriptionForm.cardName.value)) {
+            showError(subscriptionForm.cardName, "Enter a valid name");
+            valid = false;
+          } else showSuccess(subscriptionForm.cardName);
+          if (!validators.cardNumber(subscriptionForm.cardNumber.value)) {
+            showError(subscriptionForm.cardNumber, "Invalid card number");
+            valid = false;
+          } else showSuccess(subscriptionForm.cardNumber);
+          if (!validators.expiry(subscriptionForm.expiry.value)) {
+            showError(subscriptionForm.expiry, "Invalid expiry date");
+            valid = false;
+          } else showSuccess(subscriptionForm.expiry);
+          if (!validators.cvv(subscriptionForm.cvv.value)) {
+            showError(subscriptionForm.cvv, "Invalid CVV");
+            valid = false;
+          } else showSuccess(subscriptionForm.cvv);
+
+        } else if (upiPane && upiPane.style.display !== "none") {
+          if (!validators.upiId(upiId.value)) {
+            showError(upiId, "Invalid UPI ID");
+            valid = false;
+          } else showSuccess(upiId);
+          if (!upiVerified) {
+            if (upiStatusMsg) upiStatusMsg.textContent = "Please verify UPI ID.";
+            valid = false;
+          }
+
+        } else if (netBankingPane && netBankingPane.style.display !== "none") {
+          if (!validators.bankSelect(subscriptionForm.bankSelect.value)) {
+            showError(subscriptionForm.bankSelect, "Please select a bank");
+            valid = false;
+          } else showSuccess(subscriptionForm.bankSelect);
+          if (ifscInput && ifscInput.value.trim() !== "" && !ifscValid) {
+            showIFSCError("Invalid IFSC code.");
+            valid = false;
+          } else clearIFSCMessage();
+        }
+
+        if (!validators.email(subscriptionForm.email.value)) {
+          showError(subscriptionForm.email, "Invalid email address");
+          valid = false;
+        } else showSuccess(subscriptionForm.email);
+
+        return valid;
+      }
+
+      function openModalForMembership(type) {
+        if (!membershipTypeInput) return;
+        membershipTypeInput.value = type;
+        const heading = document.getElementById("modalHeader");
+        const capitalized = type.charAt(0).toUpperCase() + type.slice(1);
+        if (heading) heading.textContent = `Subscribe to ${capitalized} Membership`;
+        if (heading) {
+          heading.style.fontSize = "1rem";
+          heading.style.whiteSpace = "nowrap";
+        }
+
+        modal?.classList.add("active");
+        overlay?.classList.add("active");
+
+        subscriptionForm?.reset();
+        if (formMsg) formMsg.textContent = "";
+        if (btnConfirm) btnConfirm.disabled = false;
+        if (btnText) btnText.textContent = "Confirm Payment";
+        if (spinner) spinner.style.display = "none";
+
+        tabs.forEach(t => {
+          const isCard = t.dataset.type === "card";
+          t.classList.toggle("active", isCard);
+          t.setAttribute("aria-selected", isCard ? "true" : "false");
+        });
+        if (cardPane) cardPane.style.display = "block";
+        if (upiPane) upiPane.style.display = "none";
+        if (netBankingPane) netBankingPane.style.display = "none";
+
+        if (subscriptionForm?.cardName) subscriptionForm.cardName.focus();
+
+        trapFocus(modal);
+      }
+
+      function closeModal() {
+        modal?.classList.remove("active");
+        overlay?.classList.remove("active");
+        if (formMsg) formMsg.textContent = "";
+        subscriptionForm?.querySelectorAll(".fld")?.forEach(f => f.classList.remove("has-error", "has-success"));
+        subscriptionForm?.querySelectorAll("input, select")?.forEach(inp => inp.removeAttribute("aria-invalid"));
+        if (upiStatusMsg) upiStatusMsg.textContent = "";
+        if (upiProviderHint) upiProviderHint.textContent = "";
+        upiVerified = false;
+        if (ifscInput) ifscInput.value = "";
+        clearIFSCMessage(true);
+        ifscValid = false;
+      }
+
+      document.querySelectorAll(".btn-plan[data-plan]").forEach(btn => {
+        btn.addEventListener("click", () => {
+          openModalForMembership(btn.dataset.plan);
+        });
+      });
+
+      cancelBtn?.addEventListener("click", closeModal);
+      overlay?.addEventListener("click", closeModal);
+      document.addEventListener("keydown", e => {
+        if (modal && modal.classList.contains("active") && e.key === "Escape")
+          closeModal();
+      });
+
+      subscriptionForm?.cardNumber.addEventListener("input", e => {
+        let val = e.target.value.replace(/\D/g, "");
+        val = val.match(/.{1,4}/g)?.join(" ") || "";
+        e.target.value = val;
+        clearFieldState(e.target);
+      });
+
+      subscriptionForm?.cvv.addEventListener("input", e => {
+        e.target.value = e.target.value.replace(/[^\d]/g, "").slice(0, 4);
+        clearFieldState(e.target);
+      });
+
+      subscriptionForm?.expiry.addEventListener("input", e => {
+        let v = e.target.value.replace(/[^\d\/]/g, "");
+        if (v.length === 2 && !v.includes("/")) v = v + "/";
+        e.target.value = v.slice(0, 5);
+        clearFieldState(e.target);
+      });
+
+      ["cardName", "bankSelect", "email"].forEach(id => {
+        const inp = subscriptionForm ? subscriptionForm[id] : null;
+        if (inp)
+          inp.addEventListener("input", e => {
+            if (validators[id](e.target.value)) showSuccess(e.target);
+            else clearFieldState(e.target);
+          });
+      });
+
+      const upiProviders = {
+        okhdfcbank: "HDFC Bank",
+        oksbi: "SBI",
+        okaxis: "Axis Bank",
+        okicici: "ICICI Bank",
+        okyesbank: "Yes Bank",
+        okidfc: "IDFC First",
+        paytm: "Paytm",
+        ibl: "IndusInd",
+        upi: "UPI",
+        ybl: "PhonePe",
+        okbajaj: "Bajaj",
+        okbizaxis: "BizAxis",
+        goog: "Google Pay",
+        axl: "Axis",
+        axispay: "Axis",
+        payu: "PayU",
+        mahb: "Bank of Maharashtra",
+      };
+
+      function getUPIProvider(handle) {
+        for (const suffix in upiProviders) {
+          if (handle.endsWith(suffix)) return upiProviders[suffix];
+        }
+        return "";
+      }
+
+      function updateUPIHint(val) {
+        if (upiProviderHint) upiProviderHint.textContent = "";
+        if (/@/.test(val)) {
+          let p = val.split("@")[1].toLowerCase();
+          let provider = getUPIProvider(p);
+          if (provider && upiProviderHint) {
+            upiProviderHint.textContent = `Detected provider: ${provider}`;
+          }
+        }
+      }
+
+      let upiVerified = false;
+      upiId?.addEventListener("input", e => {
+        const val = e.target.value;
+        upiId.value = val.replace(/\s+/g, "");
+        if (validators.upiId(upiId.value)) showSuccess(upiId);
+        else clearFieldState(upiId);
+        if (upiStatusMsg) upiStatusMsg.textContent = "";
+        upiVerified = false;
+        updateUPIHint(val);
+      });
+
+      upiVerifyBtn?.addEventListener("click", () => {
+        const val = upiId ? upiId.value.trim() : "";
+        if (upiStatusMsg) upiStatusMsg.textContent = "";
+        if (upiVerifyBtn) upiVerifyBtn.disabled = true;
+        if (upiVerifyBtn) upiVerifyBtn.textContent = "Verifying...";
+        setTimeout(() => {
+          if (validators.upiId(val) && /(@ok|@upi|@paytm|@ybl)/i.test(val)) {
+            if (upiStatusMsg) {
+              upiStatusMsg.textContent = "✅ Valid UPI ID. Ready for payment.";
+              upiStatusMsg.style.color = getComputedStyle(document.documentElement).getPropertyValue("--success");
+            }
+            upiVerified = true;
+          } else {
+            if (upiStatusMsg) {
+              upiStatusMsg.textContent = "❌ Couldn't verify UPI ID. Please check for correctness or try another.";
+              upiStatusMsg.style.color = getComputedStyle(document.documentElement).getPropertyValue("--danger");
+            }
+            upiVerified = false;
+          }
+          if (upiVerifyBtn) {
+            upiVerifyBtn.disabled = false;
+            upiVerifyBtn.textContent = "Verify";
+          }
+        }, 900);
+      });
+
+      tabs.forEach(tab => {
+        tab.addEventListener("click", () => {
+          tabs.forEach(t => {
+            t.classList.remove("active");
+            t.setAttribute("aria-selected", "false");
+          });
+          tab.classList.add("active");
+          tab.setAttribute("aria-selected", "true");
+          if (cardPane) cardPane.style.display = tab.dataset.type === "card" ? "block" : "none";
+          if (upiPane) upiPane.style.display = tab.dataset.type === "upi" ? "block" : "none";
+          if (netBankingPane) netBankingPane.style.display = tab.dataset.type === "netbanking" ? "block" : "none";
+          if (formMsg) formMsg.textContent = "";
+          if (upiStatusMsg) upiStatusMsg.textContent = "";
+          if (upiProviderHint) upiProviderHint.textContent = "";
+          upiVerified = false;
+          if (upiVerifyBtn) {
+            upiVerifyBtn.disabled = false;
+            upiVerifyBtn.textContent = "Verify";
+          }
+          clearIFSCMessage();
+          if (ifscInput) ifscInput.value = "";
+          ifscValid = false;
+        });
+      });
+
+      subscriptionForm?.addEventListener("submit", e => {
+        e.preventDefault();
+        if (formMsg) formMsg.textContent = "";
+        if (!validateFormFields()) {
+          if (formMsg) formMsg.innerHTML = '<div class="danger-message">Fix errors above to proceed.</div>';
+          return;
+        }
+
+        // -- Collect membership type from hidden/selected value --
+        const membershipPlan = membershipTypeInput.value; // "pro" or "premium"
+
+        // -- Determine paymentMethod from active tab --
+        const paymentTab = document.querySelector(".payment-tab.active[data-type]");
+        const paymentMethod = paymentTab ? paymentTab.dataset.type.toUpperCase() : ""; // "CARD", "UPI", "NETBANKING"
+
+        // -- Collect and mask relevant paymentDetails --
+        let paymentDetails = {};
+
+        if (paymentMethod === "CARD") {
+          const number = subscriptionForm.cardNumber.value.replace(/\s/g, "");
+          paymentDetails.cardLast4 = number.slice(-4);
+          paymentDetails.cardholder = subscriptionForm.cardName.value;
+          // Never include CVV or full card number!
+        } else if (paymentMethod === "UPI") {
+          paymentDetails.upiId = upiId.value; // Already validated by UI
+        } else if (paymentMethod === "NETBANKING") {
+          paymentDetails.bank = subscriptionForm.bankSelect.value;
+          paymentDetails.ifsc = ifscInput.value;
+        }
+
+        // -- Set price based on selection and duration --
+        const price = membershipPlan === "pro"
+          ? (isYearly ? plans.pro.yearlyPrice : plans.pro.monthlyPrice)
+          : (isYearly ? plans.premium.yearlyPrice : plans.premium.monthlyPrice);
+
+        // -- Make the fake payment API call --
+        Array.from(subscriptionForm.elements).forEach(el => el.disabled = true);
+        if (btnConfirm) btnConfirm.disabled = true;
+        if (btnText) btnText.textContent = "Processing";
+        if (spinner) spinner.style.display = "inline-block";
+
+        fetchWithAuth("http://localhost:8080/api/fakePayment", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            membershipPlan,
+            paymentMethod,
+            paymentDetails: JSON.stringify(paymentDetails),
+            amount: price
+          })
+        })
+          .then(res => {
+            closeModal();
+            openThankYouModal(membershipPlan);
+            user.member = membershipPlan;
+            updateProfileDisplay();
+            if (formMsg) formMsg.textContent = "";
+            // Optionally re-fetch updated profile data here!
+          })
+          .catch(e => {
+            if (formMsg) formMsg.textContent = "Payment/membership error: " + e.message;
+          })
+          .finally(() => {
+            Array.from(subscriptionForm.elements).forEach(el => el.disabled = false);
+            if (btnConfirm) btnConfirm.disabled = false;
+            if (btnText) btnText.textContent = "Confirm Payment";
+            if (spinner) spinner.style.display = "none";
+          });
+      });
+
+
+      let ifscValid = false;
+      let ifscTimeout = null;
+      ifscInput?.addEventListener("input", () => {
+        clearTimeout(ifscTimeout);
+        clearIFSCMessage();
+        const ifsc = ifscInput.value.trim().toUpperCase();
+        if (ifsc.length < 11) return;
+        ifscTimeout = setTimeout(() => {
+          fetchIFSCDetails(ifsc);
+        }, 700);
+      });
+
+      function fetchIFSCDetails(ifsc) {
+        if (!ifscMessage) return;
+        ifscMessage.style.color = getComputedStyle(document.documentElement).getPropertyValue("--text-soft");
+        ifscMessage.textContent = "Fetching branch details...";
+        ifscValid = false;
+        fetch(`https://ifsc.razorpay.com/${ifsc}`)
+          .then(response => {
+            if (!response.ok) throw new Error("Invalid IFSC code");
+            return response.json();
+          })
+          .then(data => {
+            if (!data || !data.BANK) throw new Error("Invalid IFSC code");
+            ifscValid = true;
+            ifscMessage.style.color = getComputedStyle(document.documentElement).getPropertyValue("--success");
+            ifscMessage.textContent = `Bank: ${data.BANK}, Branch: ${data.BRANCH}, Address: ${data.ADDRESS}`;
+            clearError(ifscInput);
+          })
+          .catch(err => {
+            ifscValid = false;
+            showIFSCError("Invalid IFSC code.");
+          });
+      }
+
+      function clearIFSCMessage(hideMessage = false) {
+        if (!ifscMessage) return;
+        ifscValid = false;
+        ifscMessage.textContent = "";
+        if (hideMessage) {
+          ifscMessage.style.color = "transparent";
+          clearError(ifscInput);
+        } else {
+          ifscMessage.style.color = getComputedStyle(document.documentElement).getPropertyValue("--text-soft");
+        }
+      }
+
+      function showIFSCError(msg) {
+        if (!ifscMessage) return;
+        ifscMessage.style.color = getComputedStyle(document.documentElement).getPropertyValue("--danger");
+        ifscMessage.textContent = msg || "Invalid IFSC code";
+        showError(ifscInput, msg || "Invalid IFSC code");
+      }
+
+      function clearError(input) {
+        if (!input) return;
+        let fld = input.closest(".fld");
+        if (fld) {
+          fld.classList.remove("has-error");
+          const errDiv = fld.querySelector(".error-message");
+          if (errDiv) errDiv.textContent = "";
+        }
+        input.removeAttribute("aria-invalid");
+      }
+
+      function trapFocus(modal) {
+        if (!modal) return;
+        let focusableEls = modal.querySelectorAll(
+          'button, [href], input:not([type="hidden"]), select, textarea, [tabindex]:not([tabindex="-1"])'
+        );
+        focusableEls = Array.prototype.slice.call(focusableEls);
+        modal.addEventListener("keydown", function (e) {
+          if (e.key === "Tab") {
+            const first = focusableEls[0];
+            const last = focusableEls[focusableEls.length - 1];
+            if (e.shiftKey) {
+              if (document.activeElement === first) {
+                last.focus();
+                e.preventDefault();
+              }
+            } else {
+              if (document.activeElement === last) {
+                first.focus();
+                e.preventDefault();
+              }
+            }
+          }
+        });
+      }
+
+      const searchInput = document.getElementById('search-input');
+      const featureRows = document.querySelectorAll('.feature-row');
+      const faqItems = document.querySelectorAll('.faq-item');
+
+      searchInput.addEventListener('input', (e) => {
+        const query = e.target.value.toLowerCase();
+
+        // Feature Rows
+        let featureMatches = 0;
+        featureRows.forEach(row => {
+          if (row.textContent.toLowerCase().includes(query) && query.trim() !== "") {
+            row.style.display = ""; // Show row
+            featureMatches++;
+          } else {
+            row.style.display = "none";
+          }
+        });
+
+        // FAQ Items
+        let faqMatches = 0;
+        faqItems.forEach(faq => {
+          if (faq.textContent.toLowerCase().includes(query) && query.trim() !== "") {
+            faq.style.display = "";
+            faqMatches++;
+          } else {
+            faq.style.display = "none";
+          }
+        });
+
+        // If nothing matches
+        if (featureMatches === 0 && faqMatches === 0 && query.trim() !== "") {
+          // Optionally show a "No results found" message somewhere
+          document.getElementById('no-results').style.display = "";
+        } else {
+          document.getElementById('no-results').style.display = "none";
+        }
+
+        // If input box is cleared, show everything again
+        if (query.trim() === "") {
+          featureRows.forEach(row => row.style.display = "");
+          faqItems.forEach(faq => faq.style.display = "");
+          document.getElementById('no-results').style.display = "none";
+        }
+      });
+
+      window.addEventListener('keydown', (e) => {
+        if (e.key === '/') {
+          searchInput.focus();
+          e.preventDefault();
+        }
+      });
+
+      //logout logic
+      document.getElementById("logoutBtn").addEventListener("click", () => {
+        localStorage.removeItem("jwt");  // Remove JWT token
+        alert("You have been logged out.");
+        window.location.href = "login-signup.html";  // Redirect to login page
+      });
+
+    });
+
+
+    //APi Integration
+    // Retrieve JWT token from localStorage once
+    const token = localStorage.getItem("jwt");
+
+    // Fetch user profile (example of a protected GET request)
+    fetch("http://localhost:8080/api/profile", {
+      method: "GET",
+      headers: {
+        "Authorization": "Bearer " + token,      // Attach Bearer token
+        "Content-Type": "application/json"
+      }
+    })
+      .then(response => {
+        if (!response.ok) {
+          if (response.status === 401 || response.status === 403) {
+            // Token invalid or session expired: clear and redirect to login
+            alert("Session expired, please login again.");
+            localStorage.removeItem("jwt");
+            window.location.href = "login-signup.html";
+            return Promise.reject("Unauthorized");
+          }
+          return Promise.reject("Error: " + response.status);
+        }
+        return response.json();
+      })
+      .then(data => {
+        // Handle user profile data (update UI accordingly)
+        console.log("User profile data:", data);
+      })
+      .catch(err => console.error("Fetch error:", err));
+
+
+    // Membership upgrade (example of a protected POST request)
+    fetch("http://localhost:8080/api/membership?membership=pro", {
+      method: "POST",
+      headers: {
+        "Authorization": "Bearer " + token,     // Attach Bearer token
+        "Content-Type": "application/json"
+      }
+    })
+      .then(res => {
+        if (!res.ok) {
+          if (res.status === 401 || res.status === 403) {
+            alert("Session expired, please login again.");
+            localStorage.removeItem("jwt");
+            window.location.href = "login-signup.html";
+            return Promise.reject("Unauthorized");
+          }
+          return Promise.reject("Membership change failed.");
+        }
+        return res.text();    // Or res.json() if your backend sends JSON message
+      })
+      .then(statusText => {
+        alert(statusText);    // Show confirmation or server response message
+      })
+      .catch(err => console.error("Membership update error:", err));
+
+    async function fetchWithAuth(url, options = {}) {
+      const token = localStorage.getItem("jwt");
+      if (!token) {
+        alert("Please log in.");
+        window.location.href = "login-signup.html";
+        return;
+      }
+
+      options.headers = {
+        "Authorization": "Bearer " + token,
+        "Content-Type": "application/json",
+        ...options.headers,
+      };
+
+      try {
+        const response = await fetch(url, options);
+
+        if (!response.ok) {
+          if (response.status === 401 || response.status === 403) {
+            alert("Session expired. Please log in again.");
+            localStorage.removeItem("jwt");
+            window.location.href = "login-signup.html";
+            return;
+          }
+          const errorText = await response.text();
+          throw new Error(errorText || "Request failed");
+        }
+        if (response.headers.get("Content-Type")?.includes("application/json")) {
+          return response.json();
+        } else {
+          return response.text();
+        }
+      } catch (error) {
+        console.error("API error:", error);
+        throw error;
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      fetchWithAuth("http://localhost:8080/api/profile")
+        .then(user => {
+          // Display user profile info in UI
+          document.getElementById("profileName").textContent = user.username;
+          // ...etc for email, membership, etc.
+        })
+        .catch(err => {
+          // Show error UI if needed
+        });
+    });
+
+
+
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,12 @@
+C:\Users\venka\Downloads\Project_Backend_1_\Project_Backend_1\Project_Backend\Final_Project_13\Final_Project_Updatedd\backend\src\main\java\com\lms\backend\BackendApplication.java
+C:\Users\venka\Downloads\Project_Backend_1_\Project_Backend_1\Project_Backend\Final_Project_13\Final_Project_Updatedd\backend\src\main\java\com\lms\backend\config\SecurityConfig.java
+C:\Users\venka\Downloads\Project_Backend_1_\Project_Backend_1\Project_Backend\Final_Project_13\Final_Project_Updatedd\backend\src\main\java\com\lms\backend\config\WebConfig.java
+C:\Users\venka\Downloads\Project_Backend_1_\Project_Backend_1\Project_Backend\Final_Project_13\Final_Project_Updatedd\backend\src\main\java\com\lms\backend\controller\AuthController.java
+C:\Users\venka\Downloads\Project_Backend_1_\Project_Backend_1\Project_Backend\Final_Project_13\Final_Project_Updatedd\backend\src\main\java\com\lms\backend\controller\HomeController.java
+C:\Users\venka\Downloads\Project_Backend_1_\Project_Backend_1\Project_Backend\Final_Project_13\Final_Project_Updatedd\backend\src\main\java\com\lms\backend\controller\UserController.java
+C:\Users\venka\Downloads\Project_Backend_1_\Project_Backend_1\Project_Backend\Final_Project_13\Final_Project_Updatedd\backend\src\main\java\com\lms\backend\model\User.java
+C:\Users\venka\Downloads\Project_Backend_1_\Project_Backend_1\Project_Backend\Final_Project_13\Final_Project_Updatedd\backend\src\main\java\com\lms\backend\payload\LoginRequest.java
+C:\Users\venka\Downloads\Project_Backend_1_\Project_Backend_1\Project_Backend\Final_Project_13\Final_Project_Updatedd\backend\src\main\java\com\lms\backend\payload\LoginResponse.java
+C:\Users\venka\Downloads\Project_Backend_1_\Project_Backend_1\Project_Backend\Final_Project_13\Final_Project_Updatedd\backend\src\main\java\com\lms\backend\payload\SignupRequest.java
+C:\Users\venka\Downloads\Project_Backend_1_\Project_Backend_1\Project_Backend\Final_Project_13\Final_Project_Updatedd\backend\src\main\java\com\lms\backend\repository\UserRepository.java
+C:\Users\venka\Downloads\Project_Backend_1_\Project_Backend_1\Project_Backend\Final_Project_13\Final_Project_Updatedd\backend\src\main\java\com\lms\backend\service\UserService.java
